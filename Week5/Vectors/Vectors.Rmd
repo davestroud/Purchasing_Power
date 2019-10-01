@@ -10,7 +10,6 @@ Try executing this chunk by clicking the *Run* button within the chunk or by pla
 In R programming, the very basic data types are the R-objects called vectors which hold elements of different classes as shown below. Please note in R the number of classes is not confined to only the above six types. For example, we can use many atomic vectors and create an array whose class will become array.
 
 When you want to create vector with more than one element, you should use c() function which means to combine the elements into a vector
-
 ```{r}
 # Define the variable vegas
 vegas <- "Go!"
@@ -34,7 +33,6 @@ roulette_vector <- c(-24, -50, 100, -350, 10)
 ```
 
 You can give a name to the elements of a vector with the names() function. 
-
 ```{r}
 # Assign days as names of poker_vector
 names(poker_vector) <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
@@ -42,6 +40,36 @@ names(poker_vector) <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
 # Assign days as names of roulette_vectors
 names(roulette_vector) <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
 ```
+
+This is a more efficient way to assign the day of week variable. Rule of thumb: If you are writing the same thing twice, odds are that you can optimize the code.
+```{r}
+# The variable days_vector
+days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+
+# Assign the names of the day to roulette_vector and poker_vector
+names(poker_vector) <- days_vector
+names(roulette_vector) <- days_vector
+```
+
+It is important to know that if you sum two vectors in R, it takes the element-wise sum.
+```{r}
+A_vector <- c(1, 2, 3)
+B_vector <- c(4, 5, 6)
+
+# Take the sum of A_vector and B_vector
+total_vector <- A_vector + B_vector
+
+# Print out total_vector
+total_vector
+
+```
+
+
+
+
+
+
+
 
 
 
