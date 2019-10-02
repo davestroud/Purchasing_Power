@@ -1,0 +1,10 @@
+```{r}
+library(ggplot2) # Data visualization
+library(ggthemes) # Plot themes
+library(plotly) # Interactive data visualizations
+library(dplyr) # Data manipulation
+library(psych) # Will be used for correlation visualization
+library(corrplot) # Correlation visualizations
+library(corrr) # Correlation visualizations
+```
+
