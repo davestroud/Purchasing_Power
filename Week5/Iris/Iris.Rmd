@@ -62,7 +62,24 @@ petal.w.l <- ggplot(data = iris, mapping = aes(x = Petal.Length, y = Petal.Width
 ggplotly(petal.w.l)  
 ```
 
+Bar graph of Sepal width:
+```{r}
+# Create bar graph
+sepal.w.bar <- ggplot(data = iris, # Set data. 
+                      # (1) X variable; (2) Set what variable to separate by color.
+                      mapping = aes(x = Sepal.Width, color = Species, fill = Species)) +
+       geom_bar() +  # Makes a bar graph.
+       scale_fill_brewer(palette = 'Accent') +  # Color of fill.
+       scale_color_brewer(palette = 'Accent') + # Color of outline.
+       theme_classic() +  # Set theme.
+       theme(plot.background = element_rect(fill = "grey97")) +  # Background color.
+       labs(title = 'Bar graph of sepal width by species',
+            x = 'Sepal width', y = 'Count')  # Title and axes lables. 
 
+# Make graph interactive
+ggplotly(sepal.w.bar) 
+# (For non-interactive version, view 'sepal.w.bar' object)
+```
 
 
 
