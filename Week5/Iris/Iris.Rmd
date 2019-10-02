@@ -8,3 +8,73 @@ library(corrplot) # Correlation visualizations
 library(corrr) # Correlation visualizations
 ```
 
+```{r}
+data("iris")
+```
+
+```{r}
+head(iris)
+```
+
+```{r}
+plot_ly(
+       # (1) data; (2) # Assign X, Y, and Z variables (put '~' before each variable).
+       data = iris, x = ~Sepal.Length, y = ~Petal.Length, z = ~Petal.Width,
+        color = ~Species,  # Separate variable by color. Put '~' before variable.
+        type = "scatter3d",  # Makes a 3D scatterplot.
+        mode = "markers"  # Use markers. 
+        ) %>%  
+        layout(scene = list(xaxis = list(title = 'Sepal length'), # Assign x, y, & z axes names. 
+                            yaxis = list(title = 'Petal length'),
+                            zaxis = list(title = 'Petal width')))
+```
+
+
+```{r}
+# Create ggplot
+sepal.w.l <- ggplot(
+       # (1) set data; (2) specify x & y variables; (3) set what variable to separate by color. 
+       data = iris, mapping = aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+       geom_point() +  # Specifies that we want a scatter plot. 
+       geom_smooth() + # Add standard error bar line.
+       scale_color_brewer(palette = 'Accent') +  # Choose color for Species levels.
+       theme_classic() + # Set theme.
+       theme(plot.background = element_rect(fill = "grey97")) + # Background color.
+       labs(title = 'Sepal Length by Width', 
+            x = 'Sepal length', y = 'Sepal width')  # Title & axis names. 
+
+# Make plot interactive
+ggplotly(sepal.w.l)  
+# (For a non-interactive version run object 'sepal.w.l'.)
+```
+
+```{r}
+# Create ggplot. 
+petal.w.l <- ggplot(data = iris, mapping = aes(x = Petal.Length, y = Petal.Width, color = Species)) + 
+       geom_point() +
+       geom_smooth() +
+       scale_color_brewer(palette = 'Accent') +
+       theme_classic() +
+       theme(plot.background = element_rect(fill = "grey97")) +
+       labs(title = 'Petal Length by Width', x = 'Petal length', y = 'Petal width')
+
+# Make plot interactive. 
+ggplotly(petal.w.l)  
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
