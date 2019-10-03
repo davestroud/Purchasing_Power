@@ -69,6 +69,8 @@ total_vector
 poker_vector <- c(140, -50, 20, -120, 240)
 roulette_vector <- c(-24, -50, 100, -350, 10)
 days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+
+# Assign the names of the day to roulette_vector and poker_vector
 names(poker_vector) <- days_vector
 names(roulette_vector) <- days_vector
 
@@ -77,7 +79,7 @@ total_daily <- roulette_vector + poker_vector
 
 ```
 
-sum(). Calculates the sum of all elements of a vector.
+sum() Calculates the sum of all elements of a vector.
 ```{r}
 # Poker and roulette winnings from Monday to Friday:
 poker_vector <- c(140, -50, 20, -120, 240)
@@ -111,12 +113,35 @@ names(roulette_vector) <- days_vector
 total_poker <- sum(poker_vector)
 total_roulette <- sum(roulette_vector)
 
-# Check if you realized higher total gains in poker than in roulette 
-sum(poker_vector > sum(roulette_vector))
+# Check if you realized higher total gains in poker than in roulette
+total_poker > total_roulette
 ```
 
 
+```{r}
+# Poker and roulette winnings from Monday to Friday:
+poker_vector <- c(140, -50, 20, -120, 240)
+roulette_vector <- c(-24, -50, 100, -350, 10)
+days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+names(poker_vector) <- days_vector
+names(roulette_vector) <- days_vector
 
+# Define a new variable based on a selection
+poker_wednesday <- poker_vector[3]
+# Between the square brackets, you indicate what elements to select.
+```
+
+```{r}
+# Poker and roulette winnings from Monday to Friday:
+poker_vector <- c(140, -50, 20, -120, 240)
+roulette_vector <- c(-24, -50, 100, -350, 10)
+days_vector <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+names(poker_vector) <- days_vector
+names(roulette_vector) <- days_vector
+
+# Define a new variable based on a selection
+poker_midweek <- poker_vector[c(2, 3, 4)]
+```
 
 
 
