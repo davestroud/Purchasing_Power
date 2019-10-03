@@ -1749,21 +1749,55 @@ summary {
 
 
 <!-- rnb-text-begin -->
-<p>This is an <a href="http://rmarkdown.rstudio.com">R Markdown</a> Notebook. When you execute code within the notebook, the results appear beneath the code.</p>
-<p>Try executing this chunk by clicking the <em>Run</em> button within the chunk or by placing your cursor inside it and pressing <em>Cmd+Shift+Enter</em>.</p>
+<p>Explore the famous River Nile annual streamflow data</p>
+<p>The most common first step when conducting time series analysis is to display your time series dataset in a visually intuitive format. The most useful way to view raw time series data in R is to use the print() command, which displays the Start, End, and Frequency of your data along with the observations.</p>
+<p>Another useful command for viewing time series data in R is the length() function, which tells you the total number of observations in your data.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxvdChjYXJzKVxuYGBgIn0= -->
-<pre class="r"><code>plot(cars)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBQcmludCB0aGUgTmlsZSBkYXRhc2V0XG5wcmludChOaWxlKVxuYGBgIn0= -->
+<pre class="r"><code># Print the Nile dataset
+print(Nile)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiVGltZSBTZXJpZXM6XG5TdGFydCA9IDE4NzEgXG5FbmQgPSAxOTcwIFxuRnJlcXVlbmN5ID0gMSBcbiAgWzFdIDExMjAgMTE2MCAgOTYzIDEyMTAgMTE2MCAxMTYwICA4MTMgMTIzMCAxMzcwIDExNDAgIDk5NSAgOTM1IDExMTBcbiBbMTRdICA5OTQgMTAyMCAgOTYwIDExODAgIDc5OSAgOTU4IDExNDAgMTEwMCAxMjEwIDExNTAgMTI1MCAxMjYwIDEyMjBcbiBbMjddIDEwMzAgMTEwMCAgNzc0ICA4NDAgIDg3NCAgNjk0ICA5NDAgIDgzMyAgNzAxICA5MTYgIDY5MiAxMDIwIDEwNTBcbiBbNDBdICA5NjkgIDgzMSAgNzI2ICA0NTYgIDgyNCAgNzAyIDExMjAgMTEwMCAgODMyICA3NjQgIDgyMSAgNzY4ICA4NDVcbiBbNTNdICA4NjQgIDg2MiAgNjk4ICA4NDUgIDc0NCAgNzk2IDEwNDAgIDc1OSAgNzgxICA4NjUgIDg0NSAgOTQ0ICA5ODRcbiBbNjZdICA4OTcgIDgyMiAxMDEwICA3NzEgIDY3NiAgNjQ5ICA4NDYgIDgxMiAgNzQyICA4MDEgMTA0MCAgODYwICA4NzRcbiBbNzldICA4NDggIDg5MCAgNzQ0ICA3NDkgIDgzOCAxMDUwICA5MTggIDk4NiAgNzk3ICA5MjMgIDk3NSAgODE1IDEwMjBcbiBbOTJdICA5MDYgIDkwMSAxMTcwICA5MTIgIDc0NiAgOTE5ICA3MTggIDcxNCAgNzQwXG4ifQ== -->
+<pre><code>Time Series:
+Start = 1871 
+End = 1970 
+Frequency = 1 
+  [1] 1120 1160  963 1210 1160 1160  813 1230 1370 1140  995  935 1110
+ [14]  994 1020  960 1180  799  958 1140 1100 1210 1150 1250 1260 1220
+ [27] 1030 1100  774  840  874  694  940  833  701  916  692 1020 1050
+ [40]  969  831  726  456  824  702 1120 1100  832  764  821  768  845
+ [53]  864  862  698  845  744  796 1040  759  781  865  845  944  984
+ [66]  897  822 1010  771  676  649  846  812  742  801 1040  860  874
+ [79]  848  890  744  749  838 1050  918  986  797  923  975  815 1020
+ [92]  906  901 1170  912  746  919  718  714  740</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBMaXN0IHRoZSBudW1iZXIgb2Ygb2JzZXJ2YXRpb25zIGluIHRoZSBOaWxlIGRhdGFzZXRcbmxlbmd0aChOaWxlKVxuYGBgIn0= -->
+<pre class="r"><code># List the number of observations in the Nile dataset
+length(Nile)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDEwMFxuIn0= -->
+<pre><code>[1] 100</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBEaXNwbGF5IHRoZSBmaXJzdCAxMCBlbGVtZW50cyBvZiB0aGUgTmlsZSBkYXRhc2V0XG5oZWFkKE5pbGUsIG4gPSAxMClcbmBgYCJ9 -->
+<pre class="r"><code># Display the first 10 elements of the Nile dataset
+head(Nile, n = 10)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSAxMTIwIDExNjAgIDk2MyAxMjEwIDExNjAgMTE2MCAgODEzIDEyMzAgMTM3MCAxMTQwXG4ifQ== -->
+<pre><code> [1] 1120 1160  963 1210 1160 1160  813 1230 1370 1140</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBEaXNwbGF5IHRoZSBsYXN0IDEyIGVsZW1lbnRzIG9mIHRoZSBOaWxlIGRhdGFzZXRcbnRhaWwoTmlsZSwgbiA9IDEyKVxuYGBgIn0= -->
+<pre class="r"><code># Display the last 12 elements of the Nile dataset
+tail(Nile, n = 12)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSAgOTc1ICA4MTUgMTAyMCAgOTA2ICA5MDEgMTE3MCAgOTEyICA3NDYgIDkxOSAgNzE4ICA3MTQgIDc0MFxuIn0= -->
+<pre><code> [1]  975  815 1020  906  901 1170  912  746  919  718  714  740</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Add a new chunk by clicking the <em>Insert Chunk</em> button on the toolbar or by pressing <em>Cmd+Option+I</em>.</p>
-<p>When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the <em>Preview</em> button or press <em>Cmd+Shift+K</em> to preview the HTML file).</p>
-<p>The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike <em>Knit</em>, <em>Preview</em> does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.</p>
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKVGhpcyBpcyBhbiBbUiBNYXJrZG93bl0oaHR0cDovL3JtYXJrZG93bi5yc3R1ZGlvLmNvbSkgTm90ZWJvb2suIFdoZW4geW91IGV4ZWN1dGUgY29kZSB3aXRoaW4gdGhlIG5vdGVib29rLCB0aGUgcmVzdWx0cyBhcHBlYXIgYmVuZWF0aCB0aGUgY29kZS4gCgpUcnkgZXhlY3V0aW5nIHRoaXMgY2h1bmsgYnkgY2xpY2tpbmcgdGhlICpSdW4qIGJ1dHRvbiB3aXRoaW4gdGhlIGNodW5rIG9yIGJ5IHBsYWNpbmcgeW91ciBjdXJzb3IgaW5zaWRlIGl0IGFuZCBwcmVzc2luZyAqQ21kK1NoaWZ0K0VudGVyKi4gCgpgYGB7cn0KcGxvdChjYXJzKQpgYGAKCkFkZCBhIG5ldyBjaHVuayBieSBjbGlja2luZyB0aGUgKkluc2VydCBDaHVuayogYnV0dG9uIG9uIHRoZSB0b29sYmFyIG9yIGJ5IHByZXNzaW5nICpDbWQrT3B0aW9uK0kqLgoKV2hlbiB5b3Ugc2F2ZSB0aGUgbm90ZWJvb2ssIGFuIEhUTUwgZmlsZSBjb250YWluaW5nIHRoZSBjb2RlIGFuZCBvdXRwdXQgd2lsbCBiZSBzYXZlZCBhbG9uZ3NpZGUgaXQgKGNsaWNrIHRoZSAqUHJldmlldyogYnV0dG9uIG9yIHByZXNzICpDbWQrU2hpZnQrSyogdG8gcHJldmlldyB0aGUgSFRNTCBmaWxlKS4gCgpUaGUgcHJldmlldyBzaG93cyB5b3UgYSByZW5kZXJlZCBIVE1MIGNvcHkgb2YgdGhlIGNvbnRlbnRzIG9mIHRoZSBlZGl0b3IuIENvbnNlcXVlbnRseSwgdW5saWtlICpLbml0KiwgKlByZXZpZXcqIGRvZXMgbm90IHJ1biBhbnkgUiBjb2RlIGNodW5rcy4gSW5zdGVhZCwgdGhlIG91dHB1dCBvZiB0aGUgY2h1bmsgd2hlbiBpdCB3YXMgbGFzdCBydW4gaW4gdGhlIGVkaXRvciBpcyBkaXNwbGF5ZWQuCgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKRXhwbG9yZSB0aGUgZmFtb3VzIFJpdmVyIE5pbGUgYW5udWFsIHN0cmVhbWZsb3cgZGF0YQoKVGhlIG1vc3QgY29tbW9uIGZpcnN0IHN0ZXAgd2hlbiBjb25kdWN0aW5nIHRpbWUgc2VyaWVzIGFuYWx5c2lzIGlzIHRvIGRpc3BsYXkgeW91ciB0aW1lIHNlcmllcyBkYXRhc2V0IGluIGEgdmlzdWFsbHkgaW50dWl0aXZlIGZvcm1hdC4gVGhlIG1vc3QgdXNlZnVsIHdheSB0byB2aWV3IHJhdyB0aW1lIHNlcmllcyBkYXRhIGluIFIgaXMgdG8gdXNlIHRoZSBwcmludCgpIGNvbW1hbmQsIHdoaWNoIGRpc3BsYXlzIHRoZSBTdGFydCwgRW5kLCBhbmQgRnJlcXVlbmN5IG9mIHlvdXIgZGF0YSBhbG9uZyB3aXRoIHRoZSBvYnNlcnZhdGlvbnMuCgpBbm90aGVyIHVzZWZ1bCBjb21tYW5kIGZvciB2aWV3aW5nIHRpbWUgc2VyaWVzIGRhdGEgaW4gUiBpcyB0aGUgbGVuZ3RoKCkgZnVuY3Rpb24sIHdoaWNoIHRlbGxzIHlvdSB0aGUgdG90YWwgbnVtYmVyIG9mIG9ic2VydmF0aW9ucyBpbiB5b3VyIGRhdGEuCgpgYGB7cn0KIyBQcmludCB0aGUgTmlsZSBkYXRhc2V0CnByaW50KE5pbGUpCgojIExpc3QgdGhlIG51bWJlciBvZiBvYnNlcnZhdGlvbnMgaW4gdGhlIE5pbGUgZGF0YXNldApsZW5ndGgoTmlsZSkKCiMgRGlzcGxheSB0aGUgZmlyc3QgMTAgZWxlbWVudHMgb2YgdGhlIE5pbGUgZGF0YXNldApoZWFkKE5pbGUsIG4gPSAxMCkKCiMgRGlzcGxheSB0aGUgbGFzdCAxMiBlbGVtZW50cyBvZiB0aGUgTmlsZSBkYXRhc2V0CnRhaWwoTmlsZSwgbiA9IDEyKQpgYGAKCg==</div>
 
 
 
