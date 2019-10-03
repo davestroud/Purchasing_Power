@@ -1,5 +1,3 @@
-
-
 # Explore the famous River Nile annual streamflow data:
 
 
@@ -52,6 +50,10 @@ deltat(AirPassengers)
 frequency(AirPassengers)
 cycle(AirPassengers)
 
+"Sometimes there are missing values in time series data, denoted NA in R, and it is useful to know
+their locations. It is also important to know how missing values are handled by various R functions.
+The mean() function calculates the sample mean, but it fails in the presence of any NA values.
+"
 
 # Plot the AirPassengers data
 plot(AirPassengers)
@@ -61,6 +63,8 @@ mean(AirPassengers, na.rm = TRUE)
 
 # Impute mean values to NA in AirPassengers
 AirPassengers[85:96] <- mean(AirPassengers, na.rm = TRUE)
+
+print(AirPassengers[85:96])
 
 # Generate another plot of AirPassengers
 plot(AirPassengers)
