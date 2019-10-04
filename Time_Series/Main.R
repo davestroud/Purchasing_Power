@@ -75,3 +75,29 @@ points(AirPassengers,
        type = "l",
        col = 2,
        lty = 3)
+
+"The function ts() can be applied to create time series objects. A time series object is a vector (univariate) 
+or matrix (multivariate) with additional attributes, including time indices for each observation, the sampling 
+frequency and time increment between observations, and the cycle length for periodic data. Such objects are of 
+the ts class, and represent data that has been observed at (approximately) equally spaced time points. 
+
+The advantage of creating and working with time series objects of the ts class is that many methods are available
+for utilizing time series attributes, such as time index information. For example, as you've seen in earlier 
+exercises, calling plot() on a ts object will automatically generate a plot over time"
+
+"________________________________________________________________________________________________________________"
+
+"When you use datasets from others, such as those included in an R package, you can check whether they are ts 
+objects using the is.ts() command. The result of the test is either TRUE when the data is of the ts class, or 
+FALSE if it is not."
+
+# Check whether Nile is a ts object
+is.ts(Nile)
+
+# Check whether AirPassengers is a ts object
+is.ts(AirPassengers)
+
+
+is.ts(UKgas)
+plot(UKgas)
+
