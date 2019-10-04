@@ -54,6 +54,10 @@ We will first check the top 6 rows of our data to get a feel of what it looks li
 ```{r}
 head(iris)
 ```
+```{r}
+tail(iris)
+```
+
 
 <br>
 
