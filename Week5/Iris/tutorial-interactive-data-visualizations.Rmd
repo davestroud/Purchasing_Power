@@ -1,0 +1,578 @@
+---
+title: "Tutorial: Introduction to interactive data visualizations"
+author: "Saba Tavoosi"
+date: "May 2, 2019"
+output: 
+       html_document:
+          toc: true
+          theme: readable
+          highlight: tango
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+       message = FALSE,
+       warning = FALSE,
+       fig.align='center')
+```
+
+# Introduction
+
+Welcome to my first tutorial! In this tutorial we will be using the classic *iris* data set in order to create a simple line-by-line beginners guide on how to create **interactive data visualizations**. We will be going through how to create:  
+
+**1.** 3D Scatter plots   
+**2.** 2D Scatter plots   
+**3.** Bar graphs  
+**4.** Histograms  
+**5.** Box plots  
+**6.** Density plots  
+**7.** Pie charts  
+**8.** Extra: Correlation matrices (non-interactive)  
+
+*NOTE: In sections that have multiple tabs, the first tab will always include more comments and descriptions of the code. This is because the code in the rest of the tabs are similar to the first.*
+
+## Load needed packages
+First, we will load all packages that we will need.
+```{r}
+library(ggplot2) # Data visualization
+library(ggthemes) # Plot themes
+library(plotly) # Interactive data visualizations
+library(dplyr) # Data manipulation
+library(psych) # Will be used for correlation visualization
+library(corrplot) # Correlation visualizations
+library(corrr) # Correlation visualizations
+```
+
+Load the iris data set. This data set is part of the base data sets built-in in *R*, hence, we do not need to load it externally. 
+```{r}
+data("iris")
+```
+
+## Taking a glance at the data 
+
+We will first check the top 6 rows of our data to get a feel of what it looks like.
+```{r}
+head(iris)
+```
+
+<br>
+
+# Interactive Data Visualizations 
+
+For most of our visualizations we will be using `ggplot()` from GGPLOT2 to create our graphs and `ggplotly()` from PLOTLY to make them interactive---unless otherwise noted. 
+
+## 3D scatter plots 
+
+We will begin by creating an **interactive 3D scatter plot** using `plot_ly()` from the PLOTLY package.
+  
+```{r}
+plot_ly(
+       # (1) data; (2) # Assign X, Y, and Z variables (put '~' before each variable).
+       data = iris, x = ~Sepal.Length, y = ~Petal.Length, z = ~Petal.Width,
+        color = ~Species,  # Separate variable by color. Put '~' before variable.
+        type = "scatter3d",  # Makes a 3D scatterplot.
+        mode = "markers"  # Use markers. 
+        ) %>%  
+        layout(scene = list(xaxis = list(title = 'Sepal length'), # Assign x, y, & z axes names. 
+                            yaxis = list(title = 'Petal length'),
+                            zaxis = list(title = 'Petal width')))
+```
+
+View different angles of the plot by clicking and draging with your mouse. You can also change which species the graph shows by clicking on the legend names. 
+
+<br>
+
+## 2D scatter plots {.tabset} 
+
+Next, we will take a look at how to create **interactive 2D scatter plots**. 
+  
+### Sepal plot {-}
+
+**Scatter plot of sepal width by length:**
+```{r, results = 'hold'}
+# Create ggplot
+sepal.w.l <- ggplot(
+       # (1) set data; (2) specify x & y variables; (3) set what variable to separate by color. 
+       data = iris, mapping = aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+       geom_point() +  # Specifies that we want a scatter plot. 
+       geom_smooth() + # Add standard error bar line.
+       scale_color_brewer(palette = 'Accent') +  # Choose color for Species levels.
+       theme_classic() + # Set theme.
+       theme(plot.background = element_rect(fill = "grey97")) + # Background color.
+       labs(title = 'Sepal Length by Width', 
+            x = 'Sepal length', y = 'Sepal width')  # Title & axis names. 
+
+# Make plot interactive
+ggplotly(sepal.w.l)  
+# (For a non-interactive version run object 'sepal.w.l'.)
+```
+  
+  
+We have now created an interactive scatter plot! This will allow you to:  
+**(1)** Hoover your mouse over the data points for more information.  
+**(2)** Click on the legend names to add/remove variables from the plot.  
+**(3)** Click and drag with your mouse to zoom into a section of the plot.  
+**(4)** Hoover over the plot and configuration setting will appear on the top right of the plot which you can change.  
+
+<br>
+
+### Petal plot {-}
+
+**Scatter plot of petal width by length:**
+```{r, results = 'hold'}
+# Create ggplot. 
+petal.w.l <- ggplot(data = iris, mapping = aes(x = Petal.Length, y = Petal.Width, color = Species)) + 
+       geom_point() +
+       geom_smooth() +
+       scale_color_brewer(palette = 'Accent') +
+       theme_classic() +
+       theme(plot.background = element_rect(fill = "grey97")) +
+       labs(title = 'Petal Length by Width', x = 'Petal length', y = 'Petal width')
+
+# Make plot interactive. 
+ggplotly(petal.w.l)  
+```
+
+<br>
+
+## Bar plots {.tabset}
+
+Lets move on to create some **interactive bar graphs**. Each tab shows a bar graph for a different variable.     
+
+### Sepal width {-}
+
+**Bar graph of Sepal width:** 
+```{r, results = 'hold'}
+# Create bar graph
+sepal.w.bar <- ggplot(data = iris, # Set data. 
+                      # (1) X variable; (2) Set what variable to separate by color.
+                      mapping = aes(x = Sepal.Width, color = Species, fill = Species)) +
+       geom_bar() +  # Makes a bar graph.
+       scale_fill_brewer(palette = 'Accent') +  # Color of fill.
+       scale_color_brewer(palette = 'Accent') + # Color of outline.
+       theme_classic() +  # Set theme.
+       theme(plot.background = element_rect(fill = "grey97")) +  # Background color.
+       labs(title = 'Bar graph of sepal width by species',
+            x = 'Sepal width', y = 'Count')  # Title and axes lables. 
+
+# Make graph interactive
+ggplotly(sepal.w.bar) 
+# (For non-interactive version, view 'sepal.w.bar' object)
+```
+
+<br>
+
+### Sepal length {-}
+
+(For a detailed explanation of how to create the bar graph, check the first tab.)
+
+**Bar graph of sepal length:** 
+```{r, results = 'hold'}
+# Create bar graph
+sepal.l.bar <- ggplot(data = iris, mapping = aes(x = Sepal.Length, color = Species, fill = Species)) + 
+       geom_bar() + 
+       scale_fill_brewer(palette = 'Accent') + 
+       scale_color_brewer(palette = 'Accent') + 
+       theme_classic() + 
+       theme(plot.background = element_rect(fill = "grey97")) + 
+       labs(title = 'Bar graph of sepal length by species', x = 'Sepal length', y = 'Count') 
+
+# Make graph interactive
+ggplotly(sepal.l.bar) 
+```
+
+<br>
+
+### Petal width {-}
+
+(For a detailed explanation of how to create the bar graph, check the first tab.)
+
+**Bar graph of petal width:** 
+```{r, results = 'hold'}
+# Create bar graph
+petal.w.bar <- ggplot(data = iris, mapping = aes(x = Petal.Width, color = Species, fill = Species)) + 
+       geom_bar() + 
+       scale_fill_brewer(palette = 'Accent') + 
+       scale_color_brewer(palette = 'Accent') +
+       theme_classic() + 
+       theme(plot.background = element_rect(fill = "grey97")) + 
+       labs(title = 'Bar graph of petal width by species', x = 'Petal width', y = 'Count') 
+
+# Make graph interactive
+ggplotly(petal.w.bar) 
+```
+
+<br>
+
+### Petal length {-}
+
+(For a detailed explanation of how to create the bar graph, check the first tab.)
+
+**Bar graph of petal length:** 
+```{r, results = 'hold'}
+# Create bar graph
+petal.l.bar <- ggplot(data = iris, mapping = aes(x = Petal.Length, color = Species, fill = Species)) + 
+       geom_bar() +  
+       scale_fill_brewer(palette = 'Accent') + 
+       scale_color_brewer(palette = 'Accent') + 
+       theme_classic() +
+       theme(plot.background = element_rect(fill = "grey97")) + 
+       labs(title = 'Bar graph of petal length by species', x = 'Petal length', y = 'Count') 
+
+# Make graph interactive
+ggplotly(petal.l.bar) 
+```
+
+<br>
+
+## Histograms {.tabset}
+
+Here we will create some **interactive histograms**. Each tab shows a histogram for a different variable.     
+
+### Sepal width {-}
+
+**Histogram of sepal width:** 
+```{r, results = 'hold'}
+# Create histogram
+sepal.w.hist <- ggplot(
+       # (1) Data; (2) X variable; (2) Set what variable to separate by color and fill.
+       data = iris, mapping = aes(x = Sepal.Width, color = Species, fill = Species)) + 
+       geom_histogram(position = 'dodge') +  # Makes a histogram.
+       scale_fill_brewer(palette = 'Accent') +  # Color of fill.
+       scale_color_brewer(palette = 'Accent') + # Color of outline.
+       theme_classic() +  # Set theme.
+       theme(plot.background = element_rect(fill = "grey97")) +  # Background color.
+       labs(title = 'Histogram of sepal width by species',
+            x = 'Sepal width', y = 'Count')  # Title and axes lables. 
+
+# Make graph interactive
+ggplotly(sepal.w.hist) 
+# (For non-interactive version, view 'sepal.w.hist' object)
+```
+
+<br>
+
+### Sepal length {-}
+
+(For a detailed explanation of how to create the histogram, check the first tab.)
+
+**Histogram of sepal length:** 
+```{r}
+# Create histogram
+sepal.l.hist <- ggplot(data = iris, mapping = aes(x = Sepal.Length, color = Species, fill = Species)) + 
+       geom_histogram(position = 'dodge') + 
+       scale_fill_brewer(palette = 'Accent') + 
+       scale_color_brewer(palette = 'Accent') +
+       theme_classic() + 
+       theme(plot.background = element_rect(fill = "grey97")) + 
+       labs(title = 'Histogram of sepal length by species', x = 'Sepal length', y = 'Count') 
+
+# Make graph interactive
+ggplotly(sepal.l.hist) 
+```
+
+<br>
+
+### Petal width {-}
+
+(For a detailed explanation of how to create the histogram, check the first tab.)
+
+**Histogram of petal width:** 
+```{r}
+# Create histogram
+petal.w.hist <- ggplot(data = iris, mapping = aes(x = Petal.Width, color = Species, fill = Species)) + 
+       geom_histogram(position = 'dodge') + 
+       scale_fill_brewer(palette = 'Accent') + 
+       scale_color_brewer(palette = 'Accent') + 
+       theme_classic() + 
+       theme(plot.background = element_rect(fill = "grey97")) + 
+       labs(title = 'Histogram of petal width by species', x = 'Petal width', y = 'Count') 
+
+# Make graph interactive
+ggplotly(petal.w.hist) 
+```
+
+<br>
+
+### Petal length {-}
+
+(For a detailed explanation of how to create the histogram, check the first tab.)
+
+**Histogram of petal length:** 
+```{r}
+# Create histogram
+petal.l.hist <- ggplot(data = iris, mapping = aes(x = Petal.Length, color = Species, fill = Species)) + 
+       geom_histogram(position = 'dodge') + 
+       scale_fill_brewer(palette = 'Accent') + 
+       scale_color_brewer(palette = 'Accent') + 
+       theme_classic() + 
+       theme(plot.background = element_rect(fill = "grey97")) + 
+       labs(title = 'Histogram of petal length by species', x = 'Petal length', y = 'Count') 
+
+# Make graph interactive
+ggplotly(petal.l.hist) 
+```
+
+<br>
+
+## Box plots {.tabset}
+
+We will now move on to creating **interactive box plots**. Each tab shows a box plot for a different variable.     
+
+### Sepal width {-}
+**Box plot of sepal width:** 
+```{r}
+# Crete ggplot
+sepal.w.box <- ggplot(
+       # (1) Data; (2) Set X and Y variables; (3) Set what variable to separate by 'fill' color.
+       data = iris, mapping = aes(x = Species, y = Sepal.Width, fill = Species)) +
+       geom_boxplot() +  # Specifies that we want a box plot. 
+       scale_fill_brewer(palette = 'Accent') +  # Set color of box plots. 
+       theme_classic() +  # Set light theme. 
+       theme(plot.background = element_rect(fill = "grey97")) +  # Background color.
+       labs(title = 'Box plot of sepal width by species', 
+            x = 'Species', y = 'Sepal width')  # Assign a title and axes names.
+
+# Make plot interactive
+ggplotly(sepal.w.box)
+```
+
+<br>
+
+### Sepal length {-}
+
+(For a detailed explanation of how to create the box plot, check the first tab.)
+
+**Box plot of sepal length:** 
+```{r}
+# Create ggplot
+sepal.l.box <- ggplot(data = iris, mapping = aes(x = Species, y = Sepal.Length, fill = Species)) +
+       geom_boxplot() + 
+       scale_fill_brewer(palette = 'Accent') + 
+       theme_classic() +
+       theme(plot.background = element_rect(fill = "grey97")) +
+       labs(title = 'Box plot of sepal length by species', x = 'Species', y = 'Sepal length')
+
+# Make plot interactive
+ggplotly(sepal.l.box)
+```
+
+<br>
+
+### Petal width {-}
+
+(For a detailed explanation of how to create the box plot, check the first tab.)
+
+**Box plot of petal width:**  
+```{r}
+# Create ggplot
+petal.w.box <- ggplot(data = iris, mapping = aes(x = Species, y = Petal.Width, fill = Species)) + 
+       geom_boxplot() + 
+       scale_fill_brewer(palette = 'Accent') + 
+       theme_classic() +
+       theme(plot.background = element_rect(fill = "grey97")) +
+       labs(title = 'Box plot of petal width by species', x = 'Species', y = 'Petal width')
+
+# Make plot interactive
+ggplotly(petal.w.box)
+```
+
+<br>
+
+### Petal length {-}
+
+(For a detailed explanation of how to create the box plot, check the first tab.)
+
+**Box plot of petal length:** 
+```{r}
+# Create ggplot
+petal.l.box <- ggplot(data = iris, mapping = aes(x = Species, y = Petal.Length, fill = Species)) +
+       geom_boxplot() + 
+       scale_fill_brewer(palette = 'Accent') +
+       theme_classic() +
+       theme(plot.background = element_rect(fill = "grey97")) +
+       labs(title = 'Box plot of petal length by species', x = 'Species', y = 'Petal length')
+
+# Make plot interactive
+ggplotly(petal.l.box)
+```
+
+<br>
+
+## Density plots {.tabset}
+
+Now we will attempt to create some **interactive density plots**. Each tab shows a density plot for a different variable. 
+
+### Sepal width {-}
+**Density plot of sepal width:** 
+```{r}
+# Create ggplot
+sepal.w.density <- ggplot(
+       # (1) Set data; (2) Set X variable; (3) 'fill' color separates our Species levels.
+       data = iris, mapping = aes(x = Sepal.Width, color = Species, fill = Species)) +  
+       geom_density(alpha = I(0.5)) +  # Transparency of density plot.
+       scale_fill_brewer(palette = 'Accent') +  # Color of species levels.
+       scale_color_brewer(palette = 'Accent') + # Color outline of species levels.
+       theme_classic() +  # Set light theme. 
+       theme(plot.background = element_rect(fill = "grey97")) +  # Background color.
+       labs(title = 'Density plot of sepal width by species',
+            x = 'Sepal width', y = 'Density')  # Title and axes lables.
+
+# Make plot interactive
+ggplotly(sepal.w.density)
+```
+
+<br>
+
+### Sepal length {-}
+
+(For a detailed explanation of how to create the density plot, check the first tab.)
+
+**Density plot of sepal length:** 
+```{r}
+# Create ggplot
+sepal.l.density <- ggplot(data = iris, mapping = aes(x = Sepal.Length, color = Species, fill = Species)) + 
+       geom_density(alpha = I(0.5)) + 
+       scale_fill_brewer(palette = 'Accent') + 
+       scale_color_brewer(palette = 'Accent') +
+       theme_classic() + 
+       theme(plot.background = element_rect(fill = "grey97")) +
+       labs(title = 'Density plot of sepal length by species', x = 'Sepal length', y = 'Density')
+
+# Make plot interactive
+ggplotly(sepal.l.density)
+```
+
+<br>
+
+### Petal width {-}
+
+(For a detailed explanation of how to create the density plot, check the first tab.)
+
+**Density plot of petal width:**  
+```{r}
+# Create ggplot
+petal.w.density <- ggplot(data = iris, mapping = aes(x = Petal.Width, color = Species, fill = Species)) + 
+       geom_density(alpha = I(0.5)) + 
+       scale_fill_brewer(palette = 'Accent') +
+       scale_color_brewer(palette = 'Accent') +
+       theme_classic() + 
+       theme(plot.background = element_rect(fill = "grey97")) +
+       labs(title = 'Density plot of petal width by species', x = 'Petal width', y = 'Density')
+
+# Make plot interactive
+ggplotly(petal.w.density)
+```
+
+<br>
+
+### Petal length {-}
+
+(For a detailed explanation of how to create the density plot, check the first tab.)
+
+**Density plot of petal length:** 
+```{r}
+# Create ggplot
+petal.l.density <- ggplot(data = iris, mapping = aes(x = Petal.Length, color = Species, fill = Species)) + 
+       geom_density(alpha = I(0.5)) + 
+       scale_fill_brewer(palette = 'Accent') +  
+       scale_color_brewer(palette = 'Accent') + 
+       theme_classic() + 
+       theme(plot.background = element_rect(fill = "grey97")) +
+       labs(title = 'Density plot of petal length by species', x = 'Petal length', y = 'Density')
+
+# Make plot interactive
+ggplotly(petal.l.density)
+```
+
+<br>
+
+## Pie Charts
+
+Now lets move on to how to create an **interactive pie chart**.
+
+We will create a tibble with the number of each species in our data and then use this data to create our pie chart. 
+```{r fig.height=4.5}
+# Create tibble with number of species in our data
+species_data <- iris %>% count(Species)
+
+# Pick colors for pie chart
+color <- RColorBrewer::brewer.pal(3, 'Accent') # Palette & number of colors to grab
+
+# Create pie chart
+plot_ly(data = species_data, # Set data
+        labels = ~Species, # Specify variable to divide pie chart by
+        marker = list(colors = color), # Set color
+        type = 'pie') %>%  # Make pie chart
+  layout(title = 'Pie chart of iris species', # Set title
+         paper_bgcolor='#F5F5F5') # Background color 
+```
+
+<br>
+
+# Correlation matrices & network plots
+
+Lets now take a look at how to create **correlation matrices** and **network plots** in order to gauge how our variables correlate with one another. These are not interactive. 
+  
+Each of these correlation visualizations are similar, yet different. I have included different types for educational purposes so that you can use the one you see fit. 
+
+## Correlation with CORRPLOT 
+Here, we will use the `corrplot.mixed()` function from the CORRPLOT package to create an effective and easy to code correlation matrix.
+```{r}
+iris_cor <- cor(iris[,1:4]) # Create a correlation table of variables 1 through 4. 
+
+corrplot.mixed(
+       corr = iris_cor,   # The data we want to use to create our plot.
+       order = "hclust",  # Reorders matrix based on hierarchical clustering.
+       tl.col = "black",  # Turns our variable names black. 
+       upper = "ellipse") # Displays upper half of the matrix as ellipses.
+```
+
+This correlation matrix is very easy to create and is also useful because:  
+**(1)** It gives the correlations in a hierarchical clustering order which makes it easier to distinguish between more and less important correlations, and  
+**(2)** Creates ellipses which display the correlation directions and strengths based on the ellipses thickness and direction. This makes it easy to quickly visually gauge the correlations.  
+  
+<br>
+
+## Correlation with PSCYH 
+Here, we will use the `pairs.panels()` function from the PSYCH package to create a detailed correlation matrix visualization of all our features. 
+```{r}
+pairs.panels(
+       iris[,1:4],  # Our data.
+       scale = TRUE,  # Changes size of correlation value lables based on strength.
+       hist.col = 'grey85', # Histogram color.  
+       bg = c("springgreen3","orange","mediumpurple1")[iris$Species], # Colors of the Species data points.
+       pch = 21,  # The plot characters/data points shape and size.
+       main = 'Correlation matrix of Iris data') # The title. 
+```
+
+This is another very useful correlation matrix because:  
+**(1)** It gives us the standard correlation values, which sizes depend on the correlation strength,  
+**(2)** Shows histograms of each of our variables, and  
+**(3)** Gives informative scatter plots to display correlations between the variables. These data points are disaggregated by Species through different colors. Such pretty. *Much wow.*  
+
+<br> 
+
+## Correlation with CORRR  
+
+Use `network_plot()` from the CORRR package to create a correlation network. 
+```{r}
+network_plot(
+       correlate(iris[,1:4]),  # Creates a correlation table of our data. 
+       min_cor = 0)  # Minimum correlation strength to display is set at 0.
+```
+
+This created network plot outputs highly correlated variables closer together and with more opaque colored lines between the variables. Variables that have a low correlation are separated further apart and with lighter colored lines.  
+  
+Although this plot gives us less information than the previous two we have looked at, it is still good at demonstrating correlations between variables and could be especially useful for showing correlations to non-statistics savvy audiences. 
+
+<br>
+
+<style>
+div.blue {background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
+*Thank you very much for checking out my first tutorial! Please **upvote** if you found it helpful or a comment if you have any suggestions for improvements. :)*
+</div>
+
+<br>
