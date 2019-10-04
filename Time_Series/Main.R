@@ -76,28 +76,59 @@ points(AirPassengers,
        col = 2,
        lty = 3)
 
-"The function ts() can be applied to create time series objects. A time series object is a vector (univariate) 
-or matrix (multivariate) with additional attributes, including time indices for each observation, the sampling 
-frequency and time increment between observations, and the cycle length for periodic data. Such objects are of 
-the ts class, and represent data that has been observed at (approximately) equally spaced time points. 
+"The function ts() can be applied to create time series objects. A time series object is a vector (univariate)
+or matrix (multivariate) with additional attributes, including time indices for each observation, the sampling
+frequency and time increment between observations, and the cycle length for periodic data. Such objects are of
+the ts class, and represent data that has been observed at (approximately) equally spaced time points.
 
 The advantage of creating and working with time series objects of the ts class is that many methods are available
-for utilizing time series attributes, such as time index information. For example, as you've seen in earlier 
+for utilizing time series attributes, such as time index information. For example, as you've seen in earlier
 exercises, calling plot() on a ts object will automatically generate a plot over time"
 
 "________________________________________________________________________________________________________________"
 
-"When you use datasets from others, such as those included in an R package, you can check whether they are ts 
-objects using the is.ts() command. The result of the test is either TRUE when the data is of the ts class, or 
+"When you use datasets from others, such as those included in an R package, you can check whether they are ts
+objects using the is.ts() command. The result of the test is either TRUE when the data is of the ts class, or
 FALSE if it is not."
 
-# Check whether Nile is a ts object
-is.ts(Nile)
 
-# Check whether AirPassengers is a ts object
-is.ts(AirPassengers)
+"It is often very useful to plot data we are analyzing, as is the case when conducting time series analysis.
+If the dataset under study is of the ts class, then the plot() function has methods that automatically
+incorporate time index information into a figure.
+
+Let's consider the eu_stocks dataset (available in R by default as EuStockMarkets). This dataset contains
+daily closing prices of major European stock indices from 1991-1998, specifically, from Germany (DAX),
+Switzerland (SMI), France (CAC), and the UK (FTSE). The data were observed when the markets were open,
+so there are no observations on weekends and holidays. We will proceed with the approximation that this dataset
+has evenly spaced observations and is a four dimensional time series."
 
 
-is.ts(UKgas)
-plot(UKgas)
 
+# Check whether eu_stocks is a ts object
+is.ts(EuStockMarkets)
+
+# View the start, end, and frequency of eu_stocks
+start(EuStockMarkets)
+end(EuStockMarkets)
+frequency(EuStockMarkets)
+
+# Generate a simple plot of eu_stocks
+plot(EuStockMarkets)
+
+# Use ts.plot with eu_stocks
+ts.plot(
+  EuStockMarkets,
+  col = 1:4,
+  xlab = "Year",
+  ylab = "Index Value",
+  main = "Major European Stock Indices, 1991-1998"
+)
+
+# Add a legend to your ts.plot
+legend(
+  "topleft",
+  colnames(EuStockMarkets),
+  lty = 1,
+  col = 1:4,
+  bty = "n"
+)
