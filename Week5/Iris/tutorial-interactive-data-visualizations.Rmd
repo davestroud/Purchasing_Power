@@ -1,12 +1,14 @@
 ---
-title: "Tutorial: Introduction to interactive data visualizations"
+title: 'Tutorial: Introduction to interactive data visualizations'
 author: "Saba Tavoosi"
 date: "May 2, 2019"
-output: 
-       html_document:
-          toc: true
-          theme: readable
-          highlight: tango
+output:
+  html_document:
+    highlight: tango
+    theme: readable
+    toc: yes
+  pdf_document:
+    toc: yes
 ---
 
 ```{r setup, include = FALSE}
