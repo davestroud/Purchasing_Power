@@ -146,6 +146,18 @@ mean(non_us_some)
 
 ```
 
+Similar to what you have learned with vectors, the standard operators like +, -, /, *, etc. work in an element-wise way on matrices in R.
+
+For example, 2 * my_matrix multiplies each element of my_matrix by two.
+
+```{r}
+# Estimate the visitors
+visitors <- all_wars_matrix / 5
+  
+# Print the estimate to the console
+visitors
+```
+
 
 
 
