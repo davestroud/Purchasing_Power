@@ -9,6 +9,7 @@ Try executing this chunk by clicking the *Run* button within the chunk or by pla
 
 ```{r}
 plot(cars)
+help("cars")
 ```
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
@@ -48,7 +49,7 @@ The preview shows you a rendered HTML copy of the contents of the editor. Conseq
 
 ```{r}
 # Assign the value 42 to x
-x <-42
+x <- 22
 
 # Print out the value of variable x
 x
