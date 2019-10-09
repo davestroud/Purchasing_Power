@@ -2,7 +2,8 @@
 title: "Registrants"
 output: html_notebook
 ---
-
+Resources:
+https://www.earthdatascience.org/courses/earth-analytics/time-series-data/subset-time-series-data-in-r/
 
 
 ```{r}
@@ -30,4 +31,20 @@ head(registrants)
 # view the structure of the data
 str(registrants)
 ```
+```{r}
+summary(registrants$REGISTRANTS)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
