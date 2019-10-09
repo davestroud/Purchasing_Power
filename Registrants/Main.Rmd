@@ -13,11 +13,21 @@ library(dplyr) # for data cleaning
 
 ```{r}
 # Load in data set
-registrants <- read.csv("Registrants.csv", stringsAsFactors = FALSE)
+registrants <- read.csv("Registrants.csv", stringsAsFactors = FALSE, header = TRUE)
 ```
 
 ```{r}
 # drop columns that we aren't using; assign new variable
 registrants <-select(registrants, -c(P_CLIENTCODE, Client.ID))
+```
+
+```{r}
+# Date is character and registrants is an integer
+head(registrants)
+```
+
+```{r}
+# view the structure of the data
+str(registrants)
 ```
 

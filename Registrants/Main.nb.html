@@ -1760,23 +1760,50 @@ library(dplyr) # for data cleaning</code></pre>
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVnaXN0cmFudHMgPC0gcmVhZC5jc3YoXCJSZWdpc3RyYW50cy5jc3ZcIiwgc3RyaW5nc0FzRmFjdG9ycyA9IEZBTFNFKVxuYGBgIn0= -->
-<pre class="r"><code>registrants &lt;- read.csv(&quot;Registrants.csv&quot;, stringsAsFactors = FALSE)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBMb2FkIGluIGRhdGEgc2V0XG5yZWdpc3RyYW50cyA8LSByZWFkLmNzdihcIlJlZ2lzdHJhbnRzLmNzdlwiLCBzdHJpbmdzQXNGYWN0b3JzID0gRkFMU0UsIGhlYWRlciA9IFRSVUUpXG5gYGAifQ== -->
+<pre class="r"><code># Load in data set
+registrants &lt;- read.csv(&quot;Registrants.csv&quot;, stringsAsFactors = FALSE, header = TRUE)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBkcm9wIGNvbHVtbnMgdGhhdCB3ZSBhcmVuJ3QgdXNpbmdcbnJlZ2lzdHJhbnRzIDwtc2VsZWN0KHJlZ2lzdHJhbnRzLCAtYyhQX0NMSUVOVENPREUsIENsaWVudC5JRCkpXG5cbmBgYCJ9 -->
-<pre class="r"><code># drop columns that we aren't using
-registrants &lt;-select(registrants, -c(P_CLIENTCODE, Client.ID))
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBkcm9wIGNvbHVtbnMgdGhhdCB3ZSBhcmVuJ3QgdXNpbmc7IGFzc2lnbiBuZXcgdmFyaWFibGVcbnJlZ2lzdHJhbnRzIDwtc2VsZWN0KHJlZ2lzdHJhbnRzLCAtYyhQX0NMSUVOVENPREUsIENsaWVudC5JRCkpXG5gYGAifQ== -->
+<pre class="r"><code># drop columns that we aren't using; assign new variable
+registrants &lt;-select(registrants, -c(P_CLIENTCODE, Client.ID))</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaGVhZChyZWdpc3RyYW50cylcbmBgYCJ9 -->
+<pre class="r"><code>head(registrants)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6MiwibnJvdyI6Nn0sInJkZiI6Ikg0c0lBQUFBQUFBQUExMlFUVS9ETUF5R3ZXekphTWMrSkg1SEtvMHl4SFhTQm9JRGg2NUl1NGF1UUVWSnByWVRIUG5sQXlkTHBNbVYzT1I1WGZ1MW02MjJhYnlOQWFBUGZZRnZqbGZnTC9tOXZBTVlNSVFlRENDeTV3K21yL0JpeFJtRzhJbUx1WHhTV3M0WGdhOEpwNFJ2Q0M4STN3WUdHRHNmZ0V1TUNVYmtlWVF4SlFOeXJiN0sxZy9IdkRqTTFnK3JaYjcyT0VKODNPVFo4am5ma1BLb01kOUphR0Y5MlMrNFIxQ2ZvbFp0OEFsaXZGT2RTdDRhckVjNmtwS2gyWGVWMFZqRTdCL2twTGpYRUdGNjBIYVNuU3crRHZwVHB0YkFwVTh4OXFjNHU3T1RKZnZ6cmJodkpVcjlYdWt5ekY2cjE3TDJNTUdOM2NMSnZxbDBGelpCdFUwNjA2bndYVnlZT2lodU56aitBNlhUb09RNEFnQUEifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["REGDATE"],"name":[1],"type":["chr"],"align":["left"]},{"label":["REGISTRANTS"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"1-Jan-15","2":"12","_rn_":"1"},{"1":"2-Jan-15","2":"14","_rn_":"2"},{"1":"3-Jan-15","2":"9","_rn_":"3"},{"1":"4-Jan-15","2":"6","_rn_":"4"},{"1":"5-Jan-15","2":"11","_rn_":"5"},{"1":"6-Jan-15","2":"15","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[6]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyB2aWV3IHRoZSBzdHJ1Y3R1cmUgb2YgdGhlIGRhdGFcbnN0cihyZWdpc3RyYW50cylcbmBgYCJ9 -->
+<pre class="r"><code># view the structure of the data
+str(registrants)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiJ2RhdGEuZnJhbWUnOlx0MjM5NzY2IG9icy4gb2YgIDIgdmFyaWFibGVzOlxuICQgUkVHREFURSAgICA6IGNociAgXCIxLUphbi0xNVwiIFwiMi1KYW4tMTVcIiBcIjMtSmFuLTE1XCIgXCI0LUphbi0xNVwiIC4uLlxuICQgUkVHSVNUUkFOVFM6IGludCAgMTIgMTQgOSA2IDExIDE1IDggMTkgNCAxMyAuLi5cbiJ9 -->
+<pre><code>'data.frame':   239766 obs. of  2 variables:
+ $ REGDATE    : chr  &quot;1-Jan-15&quot; &quot;2-Jan-15&quot; &quot;3-Jan-15&quot; &quot;4-Jan-15&quot; ...
+ $ REGISTRANTS: int  12 14 9 6 11 15 8 19 4 13 ...</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUmVnaXN0cmFudHMiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KCgoKYGBge3J9CmxpYnJhcnkobHVicmlkYXRlKQpsaWJyYXJ5KGdncGxvdDIpCmxpYnJhcnkoZHBseXIpICMgZm9yIGRhdGEgY2xlYW5pbmcKYGBgCgpgYGB7cn0KIyBMb2FkIGluIGRhdGEgc2V0CnJlZ2lzdHJhbnRzIDwtIHJlYWQuY3N2KCJSZWdpc3RyYW50cy5jc3YiLCBzdHJpbmdzQXNGYWN0b3JzID0gRkFMU0UpCmBgYAoKYGBge3J9CiMgZHJvcCBjb2x1bW5zIHRoYXQgd2UgYXJlbid0IHVzaW5nOyBhc3NpZ24gbmV3IHZhcmlhYmxlCnJlZ2lzdHJhbnRzIDwtc2VsZWN0KHJlZ2lzdHJhbnRzLCAtYyhQX0NMSUVOVENPREUsIENsaWVudC5JRCkpCmBgYAoK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUmVnaXN0cmFudHMiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KCgoKYGBge3J9CmxpYnJhcnkobHVicmlkYXRlKQpsaWJyYXJ5KGdncGxvdDIpCmxpYnJhcnkoZHBseXIpICMgZm9yIGRhdGEgY2xlYW5pbmcKYGBgCgpgYGB7cn0KIyBMb2FkIGluIGRhdGEgc2V0CnJlZ2lzdHJhbnRzIDwtIHJlYWQuY3N2KCJSZWdpc3RyYW50cy5jc3YiLCBzdHJpbmdzQXNGYWN0b3JzID0gRkFMU0UsIGhlYWRlciA9IFRSVUUpCmBgYAoKYGBge3J9CiMgZHJvcCBjb2x1bW5zIHRoYXQgd2UgYXJlbid0IHVzaW5nOyBhc3NpZ24gbmV3IHZhcmlhYmxlCnJlZ2lzdHJhbnRzIDwtc2VsZWN0KHJlZ2lzdHJhbnRzLCAtYyhQX0NMSUVOVENPREUsIENsaWVudC5JRCkpCmBgYAoKYGBge3J9CiMgRGF0ZSBpcyBjaGFyYWN0ZXIgYW5kIHJlZ2lzdHJhbnRzIGlzIGFuIGludGVnZXIKaGVhZChyZWdpc3RyYW50cykKYGBgCgpgYGB7cn0KIyB2aWV3IHRoZSBzdHJ1Y3R1cmUgb2YgdGhlIGRhdGEKc3RyKHJlZ2lzdHJhbnRzKQpgYGAKCg==</div>
 
 
 
