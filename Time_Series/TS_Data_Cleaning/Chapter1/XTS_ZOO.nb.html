@@ -1751,9 +1751,9 @@ summary {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBMb2FkIHh0c1xubGlicmFyeSh4dHMpXG5gYGAifQ== -->
-<pre class="r"><code># Load xts
-library(xts)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuIyBMb2FkIHh0c1xubGlicmFyeSh4dHMpXG5gYGBcbmBgYCJ9 -->
+<p><code>r</code>r # Load xts library(xts)</p>
+<pre><code></code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1762,21 +1762,24 @@ library(xts)</code></pre>
 <p>xts also allows you to bind arbitrary key-value attributes to your data. This lets you keep metadata about your object inside your object. To add these at creation, you simply pass additional name = value arguments to the xts() function.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDcmVhdGUgdGhlIG9iamVjdCBkYXRhIHVzaW5nIDUgcmFuZG9tIG51bWJlcnNcbmRhdGEgPC0gcm5vcm0oNSlcblxuIyBDcmVhdGUgZGF0ZXMgYXMgYSBEYXRlIGNsYXNzIG9iamVjdCBzdGFydGluZyBmcm9tIDIwMTYtMDEtMDFcbmRhdGVzIDwtIHNlcShhcy5EYXRlKFwiMjAxNi0wMS0wMVwiKSwgbGVuZ3RoID0gNSwgYnkgPSBcImRheXNcIilcblxuIyBVc2UgeHRzKCkgdG8gY3JlYXRlIHNtaXRoXG5zbWl0aCA8LSB4dHMoeCA9IGRhdGEsIG9yZGVyLmJ5ID0gZGF0ZXMpXG5cbiMgQ3JlYXRlIGJkYXkgKDE4OTktMDUtMDgpIHVzaW5nIGEgUE9TSVhjdCBkYXRlIGNsYXNzIG9iamVjdFxuYmRheSA8LSBhcy5QT1NJWGN0KFwiMTg5OS0wNS0wOFwiKVxuXG4jIENyZWF0ZSBoYXllayBhbmQgYWRkIGEgbmV3IGF0dHJpYnV0ZSBjYWxsZWQgYm9yblxuaGF5ZWsgPC0geHRzKHggPSBkYXRhLCBvcmRlci5ieSA9IGRhdGVzLCBib3JuID0gYmRheSlcbmBgYCJ9 -->
-<pre class="r"><code># Create the object data using 5 random numbers
-data &lt;- rnorm(5)
-
-# Create dates as a Date class object starting from 2016-01-01
-dates &lt;- seq(as.Date(&quot;2016-01-01&quot;), length = 5, by = &quot;days&quot;)
-
-# Use xts() to create smith
-smith &lt;- xts(x = data, order.by = dates)
-
-# Create bday (1899-05-08) using a POSIXct date class object
-bday &lt;- as.POSIXct(&quot;1899-05-08&quot;)
-
-# Create hayek and add a new attribute called born
-hayek &lt;- xts(x = data, order.by = dates, born = bday)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuIyBDcmVhdGUgdGhlIG9iamVjdCBkYXRhIHVzaW5nIDUgcmFuZG9tIG51bWJlcnNcbmRhdGEgPC0gcm5vcm0oNSlcblxuIyBDcmVhdGUgZGF0ZXMgYXMgYSBEYXRlIGNsYXNzIG9iamVjdCBzdGFydGluZyBmcm9tIDIwMTYtMDEtMDFcbmRhdGVzIDwtIHNlcShhcy5EYXRlKFxcMjAxNi0wMS0wMVxcKSwgbGVuZ3RoID0gNSwgYnkgPSBcXGRheXNcXClcblxuIyBVc2UgeHRzKCkgdG8gY3JlYXRlIHNtaXRoXG5zbWl0aCA8LSB4dHMoeCA9IGRhdGEsIG9yZGVyLmJ5ID0gZGF0ZXMpXG5cbiMgQ3JlYXRlIGJkYXkgKDE4OTktMDUtMDgpIHVzaW5nIGEgUE9TSVhjdCBkYXRlIGNsYXNzIG9iamVjdFxuYmRheSA8LSBhcy5QT1NJWGN0KFxcMTg5OS0wNS0wOFxcKVxuXG4jIENyZWF0ZSBoYXllayBhbmQgYWRkIGEgbmV3IGF0dHJpYnV0ZSBjYWxsZWQgYm9yblxuaGF5ZWsgPC0geHRzKHggPSBkYXRhLCBvcmRlci5ieSA9IGRhdGVzLCBib3JuID0gYmRheSlcbmBgYFxuYGBgIn0= -->
+<p><code>r</code>r # Create the object data using 5 random numbers data &lt;- rnorm(5)</p>
+<div id="create-dates-as-a-date-class-object-starting-from-2016-01-01" class="section level1">
+<h1>Create dates as a Date class object starting from 2016-01-01</h1>
+<p>dates &lt;- seq(as.Date(\2016-01-01), length = 5, by = )</p>
+</div>
+<div id="use-xts-to-create-smith" class="section level1">
+<h1>Use xts() to create smith</h1>
+<p>smith &lt;- xts(x = data, order.by = dates)</p>
+</div>
+<div id="create-bday-1899-05-08-using-a-posixct-date-class-object" class="section level1">
+<h1>Create bday (1899-05-08) using a POSIXct date class object</h1>
+<p>bday &lt;- as.POSIXct(\1899-05-08)</p>
+</div>
+<div id="create-hayek-and-add-a-new-attribute-called-born" class="section level1">
+<h1>Create hayek and add a new attribute called born</h1>
+<p>hayek &lt;- xts(x = data, order.by = dates, born = bday)</p>
+<pre><code></code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1788,15 +1791,31 @@ hayek &lt;- xts(x = data, order.by = dates, born = bday)</code></pre>
 hayek[3,1]
 </code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgICAgICAgICBbLDFdXG4yMDE2LTAxLTAzIC0wLjk1NzY3NTZcbiJ9 -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgICAgICAgICBbLDFdXG4yMDE2LTAxLTAzIC0wLjQ5MDkyMThcbiJ9 -->
 <pre><code>                 [,1]
-2016-01-03 -0.9576756</code></pre>
+2016-01-03 -0.4909218</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Now that you can create xts objects, your next task is to examine an xts object from the inside.</p>
+<p>At the core of both xts and zoo is a simple R matrix with a few additional attributes. The most important of these attributes is the index. The index holds all the information we need for xts to treat our data as a time series.</p>
+<p>When working with time series, it will sometimes be necessary to separate your time series into its core data and index attributes for additional analysis and manipulation. The core data is the matrix portion of xts. You can separate this from the xts object using coredata(). The index portion of the xts object is available using the index() function. Note that both of these functions are methods from the zoo class, which xts extends.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBWaWV3IHRoZSBjbGFzcyBvZiBoYXlla19pbmRleFxuY2xhc3MoaGF5ZWtfaW5kZXgpXG5cbmBgYCJ9 -->
+<pre class="r"><code># View the class of hayek_index
+class(hayek_index)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiRGF0ZVwiXG4ifQ== -->
+<pre><code>[1] &quot;Date&quot;</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
+</div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CiMgTG9hZCB4dHMKbGlicmFyeSh4dHMpCmBgYAoKCnh0cyBvYmplY3RzIGFyZSBzaW1wbGUuIFRoaW5rIG9mIHRoZW0gYXMgYSBtYXRyaXggb2Ygb2JzZXJ2YXRpb25zIGNvbWJpbmVkIHdpdGggYW4gaW5kZXggb2YgY29ycmVzcG9uZGluZyBkYXRlcyBhbmQgdGltZXMuCgpUaGUgbWFpbiB4dHMgY29uc3RydWN0b3IgdGFrZXMgYSBudW1iZXIgb2YgYXJndW1lbnRzLCBidXQgdGhlIHR3byBtb3N0IGltcG9ydGFudCBhcmUgeCBmb3IgdGhlIGRhdGEgYW5kIG9yZGVyLmJ5IGZvciB0aGUgaW5kZXguIHggbXVzdCBiZSBhIHZlY3RvciBvciBtYXRyaXguIG9yZGVyLmJ5IGlzIGEgdmVjdG9yIHdoaWNoIG11c3QgYmUgdGhlIHNhbWUgbGVuZ3RoIG9yIG51bWJlciBvZiByb3dzIGFzIHgsIGJlIGEgcHJvcGVyIHRpbWUgb3IgZGF0ZSBvYmplY3QgKHZlcnkgaW1wb3J0YW50ISksIGFuZCBiZSBpbiBpbmNyZWFzaW5nIG9yZGVyLgoKeHRzIGFsc28gYWxsb3dzIHlvdSB0byBiaW5kIGFyYml0cmFyeSBrZXktdmFsdWUgYXR0cmlidXRlcyB0byB5b3VyIGRhdGEuIFRoaXMgbGV0cyB5b3Uga2VlcCBtZXRhZGF0YSBhYm91dCB5b3VyIG9iamVjdCBpbnNpZGUgeW91ciBvYmplY3QuIFRvIGFkZCB0aGVzZSBhdCBjcmVhdGlvbiwgeW91IHNpbXBseSBwYXNzIGFkZGl0aW9uYWwgbmFtZSA9IHZhbHVlIGFyZ3VtZW50cyB0byB0aGUgeHRzKCkgZnVuY3Rpb24uCgpgYGB7cn0KIyBDcmVhdGUgdGhlIG9iamVjdCBkYXRhIHVzaW5nIDUgcmFuZG9tIG51bWJlcnMKZGF0YSA8LSBybm9ybSg1KQoKIyBDcmVhdGUgZGF0ZXMgYXMgYSBEYXRlIGNsYXNzIG9iamVjdCBzdGFydGluZyBmcm9tIDIwMTYtMDEtMDEKZGF0ZXMgPC0gc2VxKGFzLkRhdGUoIjIwMTYtMDEtMDEiKSwgbGVuZ3RoID0gNSwgYnkgPSAiZGF5cyIpCgojIFVzZSB4dHMoKSB0byBjcmVhdGUgc21pdGgKc21pdGggPC0geHRzKHggPSBkYXRhLCBvcmRlci5ieSA9IGRhdGVzKQoKIyBDcmVhdGUgYmRheSAoMTg5OS0wNS0wOCkgdXNpbmcgYSBQT1NJWGN0IGRhdGUgY2xhc3Mgb2JqZWN0CmJkYXkgPC0gYXMuUE9TSVhjdCgiMTg5OS0wNS0wOCIpCgojIENyZWF0ZSBoYXllayBhbmQgYWRkIGEgbmV3IGF0dHJpYnV0ZSBjYWxsZWQgYm9ybgpoYXllayA8LSB4dHMoeCA9IGRhdGEsIG9yZGVyLmJ5ID0gZGF0ZXMsIGJvcm4gPSBiZGF5KQpgYGAKCkl0IGlzIGJlc3QgdG8gdGhpbmsgb2YgeHRzIG9iamVjdHMgYXMgbm9ybWFsIFIgbWF0cmljZXMsIGJ1dCB3aXRoIHNwZWNpYWwgcG93ZXJzLiBUaGVzZSBwb3dlcnMgbGV0IHlvdSBtYW5pcHVsYXRlIHlvdXIgZGF0YSBhcyBhIGZ1bmN0aW9uIG9mIHRpbWUsIGFzIHlvdXIgZGF0YSBpcyBub3cgc2VsZi1hd2FyZSBvZiB3aGVuIGl0IGV4aXN0cyBpbiB0aW1lCgpgYGB7cn0KIyBWaWV3IHRoZSBzdHJ1Y3R1cmUgb2YgZXhfbWF0cml4CnN0cihoYXllaykKCiMgRXh0cmFjdCB0aGUgM3JkIG9ic2VydmF0aW9uIG9mIHRoZSAybmQgY29sdW1uIG9mIGV4X21hdHJpeApoYXlla1szLDFdCgpgYGAKCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CiMgTG9hZCB4dHMKbGlicmFyeSh4dHMpCmBgYAoKCnh0cyBvYmplY3RzIGFyZSBzaW1wbGUuIFRoaW5rIG9mIHRoZW0gYXMgYSBtYXRyaXggb2Ygb2JzZXJ2YXRpb25zIGNvbWJpbmVkIHdpdGggYW4gaW5kZXggb2YgY29ycmVzcG9uZGluZyBkYXRlcyBhbmQgdGltZXMuCgpUaGUgbWFpbiB4dHMgY29uc3RydWN0b3IgdGFrZXMgYSBudW1iZXIgb2YgYXJndW1lbnRzLCBidXQgdGhlIHR3byBtb3N0IGltcG9ydGFudCBhcmUgeCBmb3IgdGhlIGRhdGEgYW5kIG9yZGVyLmJ5IGZvciB0aGUgaW5kZXguIHggbXVzdCBiZSBhIHZlY3RvciBvciBtYXRyaXguIG9yZGVyLmJ5IGlzIGEgdmVjdG9yIHdoaWNoIG11c3QgYmUgdGhlIHNhbWUgbGVuZ3RoIG9yIG51bWJlciBvZiByb3dzIGFzIHgsIGJlIGEgcHJvcGVyIHRpbWUgb3IgZGF0ZSBvYmplY3QgKHZlcnkgaW1wb3J0YW50ISksIGFuZCBiZSBpbiBpbmNyZWFzaW5nIG9yZGVyLgoKeHRzIGFsc28gYWxsb3dzIHlvdSB0byBiaW5kIGFyYml0cmFyeSBrZXktdmFsdWUgYXR0cmlidXRlcyB0byB5b3VyIGRhdGEuIFRoaXMgbGV0cyB5b3Uga2VlcCBtZXRhZGF0YSBhYm91dCB5b3VyIG9iamVjdCBpbnNpZGUgeW91ciBvYmplY3QuIFRvIGFkZCB0aGVzZSBhdCBjcmVhdGlvbiwgeW91IHNpbXBseSBwYXNzIGFkZGl0aW9uYWwgbmFtZSA9IHZhbHVlIGFyZ3VtZW50cyB0byB0aGUgeHRzKCkgZnVuY3Rpb24uCgpgYGB7cn0KIyBDcmVhdGUgdGhlIG9iamVjdCBkYXRhIHVzaW5nIDUgcmFuZG9tIG51bWJlcnMKZGF0YSA8LSBybm9ybSg1KQoKIyBDcmVhdGUgZGF0ZXMgYXMgYSBEYXRlIGNsYXNzIG9iamVjdCBzdGFydGluZyBmcm9tIDIwMTYtMDEtMDEKZGF0ZXMgPC0gc2VxKGFzLkRhdGUoIjIwMTYtMDEtMDEiKSwgbGVuZ3RoID0gNSwgYnkgPSAiZGF5cyIpCgojIFVzZSB4dHMoKSB0byBjcmVhdGUgc21pdGgKc21pdGggPC0geHRzKHggPSBkYXRhLCBvcmRlci5ieSA9IGRhdGVzKQoKIyBDcmVhdGUgYmRheSAoMTg5OS0wNS0wOCkgdXNpbmcgYSBQT1NJWGN0IGRhdGUgY2xhc3Mgb2JqZWN0CmJkYXkgPC0gYXMuUE9TSVhjdCgiMTg5OS0wNS0wOCIpCgojIENyZWF0ZSBoYXllayBhbmQgYWRkIGEgbmV3IGF0dHJpYnV0ZSBjYWxsZWQgYm9ybgpoYXllayA8LSB4dHMoeCA9IGRhdGEsIG9yZGVyLmJ5ID0gZGF0ZXMsIGJvcm4gPSBiZGF5KQpgYGAKCkl0IGlzIGJlc3QgdG8gdGhpbmsgb2YgeHRzIG9iamVjdHMgYXMgbm9ybWFsIFIgbWF0cmljZXMsIGJ1dCB3aXRoIHNwZWNpYWwgcG93ZXJzLiBUaGVzZSBwb3dlcnMgbGV0IHlvdSBtYW5pcHVsYXRlIHlvdXIgZGF0YSBhcyBhIGZ1bmN0aW9uIG9mIHRpbWUsIGFzIHlvdXIgZGF0YSBpcyBub3cgc2VsZi1hd2FyZSBvZiB3aGVuIGl0IGV4aXN0cyBpbiB0aW1lCgpgYGB7cn0KIyBWaWV3IHRoZSBzdHJ1Y3R1cmUgb2YgZXhfbWF0cml4CnN0cihoYXllaykKCiMgRXh0cmFjdCB0aGUgM3JkIG9ic2VydmF0aW9uIG9mIHRoZSAybmQgY29sdW1uIG9mIGV4X21hdHJpeApoYXlla1szLDFdCgpgYGAKCk5vdyB0aGF0IHlvdSBjYW4gY3JlYXRlIHh0cyBvYmplY3RzLCB5b3VyIG5leHQgdGFzayBpcyB0byBleGFtaW5lIGFuIHh0cyBvYmplY3QgZnJvbSB0aGUgaW5zaWRlLgoKQXQgdGhlIGNvcmUgb2YgYm90aCB4dHMgYW5kIHpvbyBpcyBhIHNpbXBsZSBSIG1hdHJpeCB3aXRoIGEgZmV3IGFkZGl0aW9uYWwgYXR0cmlidXRlcy4gVGhlIG1vc3QgaW1wb3J0YW50IG9mIHRoZXNlIGF0dHJpYnV0ZXMgaXMgdGhlIGluZGV4LiBUaGUgaW5kZXggaG9sZHMgYWxsIHRoZSBpbmZvcm1hdGlvbiB3ZSBuZWVkIGZvciB4dHMgdG8gdHJlYXQgb3VyIGRhdGEgYXMgYSB0aW1lIHNlcmllcy4KCldoZW4gd29ya2luZyB3aXRoIHRpbWUgc2VyaWVzLCBpdCB3aWxsIHNvbWV0aW1lcyBiZSBuZWNlc3NhcnkgdG8gc2VwYXJhdGUgeW91ciB0aW1lIHNlcmllcyBpbnRvIGl0cyBjb3JlIGRhdGEgYW5kIGluZGV4IGF0dHJpYnV0ZXMgZm9yIGFkZGl0aW9uYWwgYW5hbHlzaXMgYW5kIG1hbmlwdWxhdGlvbi4gVGhlIGNvcmUgZGF0YSBpcyB0aGUgbWF0cml4IHBvcnRpb24gb2YgeHRzLiBZb3UgY2FuIHNlcGFyYXRlIHRoaXMgZnJvbSB0aGUgeHRzIG9iamVjdCB1c2luZyBjb3JlZGF0YSgpLiBUaGUgaW5kZXggcG9ydGlvbiBvZiB0aGUgeHRzIG9iamVjdCBpcyBhdmFpbGFibGUgdXNpbmcgdGhlIGluZGV4KCkgZnVuY3Rpb24uIE5vdGUgdGhhdCBib3RoIG9mIHRoZXNlIGZ1bmN0aW9ucyBhcmUgbWV0aG9kcyBmcm9tIHRoZSB6b28gY2xhc3MsIHdoaWNoIHh0cyBleHRlbmRzLgoKYGBge3J9CiMgRXh0cmFjdCB0aGUgY29yZSBkYXRhIG9mIGhheWVrCmhheWVrX2NvcmUgPC0gY29yZWRhdGEoaGF5ZWspCgojIFZpZXcgdGhlIGNsYXNzIG9mIGhheWVrX2NvcmUKY2xhc3MoaGF5ZWtfY29yZSkKCiMgRXh0cmFjdCB0aGUgaW5kZXggb2YgaGF5ZWsKaGF5ZWtfaW5kZXggPC0gaW5kZXgoaGF5ZWspCgojIFZpZXcgdGhlIGNsYXNzIG9mIGhheWVrX2luZGV4CmNsYXNzKGhheWVrX2luZGV4KQpgYGAKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCg==</div>
 
 
 
