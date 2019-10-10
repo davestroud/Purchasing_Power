@@ -1750,8 +1750,53 @@ summary {
 
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBMb2FkIHh0c1xubGlicmFyeSh4dHMpXG5gYGAifQ== -->
+<pre class="r"><code># Load xts
+library(xts)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>xts objects are simple. Think of them as a matrix of observations combined with an index of corresponding dates and times.</p>
+<p>The main xts constructor takes a number of arguments, but the two most important are x for the data and order.by for the index. x must be a vector or matrix. order.by is a vector which must be the same length or number of rows as x, be a proper time or date object (very important!), and be in increasing order.</p>
+<p>xts also allows you to bind arbitrary key-value attributes to your data. This lets you keep metadata about your object inside your object. To add these at creation, you simply pass additional name = value arguments to the xts() function.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDcmVhdGUgdGhlIG9iamVjdCBkYXRhIHVzaW5nIDUgcmFuZG9tIG51bWJlcnNcbmRhdGEgPC0gcm5vcm0oNSlcblxuIyBDcmVhdGUgZGF0ZXMgYXMgYSBEYXRlIGNsYXNzIG9iamVjdCBzdGFydGluZyBmcm9tIDIwMTYtMDEtMDFcbmRhdGVzIDwtIHNlcShhcy5EYXRlKFwiMjAxNi0wMS0wMVwiKSwgbGVuZ3RoID0gNSwgYnkgPSBcImRheXNcIilcblxuIyBVc2UgeHRzKCkgdG8gY3JlYXRlIHNtaXRoXG5zbWl0aCA8LSB4dHMoeCA9IGRhdGEsIG9yZGVyLmJ5ID0gZGF0ZXMpXG5cbiMgQ3JlYXRlIGJkYXkgKDE4OTktMDUtMDgpIHVzaW5nIGEgUE9TSVhjdCBkYXRlIGNsYXNzIG9iamVjdFxuYmRheSA8LSBhcy5QT1NJWGN0KFwiMTg5OS0wNS0wOFwiKVxuXG4jIENyZWF0ZSBoYXllayBhbmQgYWRkIGEgbmV3IGF0dHJpYnV0ZSBjYWxsZWQgYm9yblxuaGF5ZWsgPC0geHRzKHggPSBkYXRhLCBvcmRlci5ieSA9IGRhdGVzLCBib3JuID0gYmRheSlcbmBgYCJ9 -->
+<pre class="r"><code># Create the object data using 5 random numbers
+data &lt;- rnorm(5)
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoK</div>
+# Create dates as a Date class object starting from 2016-01-01
+dates &lt;- seq(as.Date(&quot;2016-01-01&quot;), length = 5, by = &quot;days&quot;)
+
+# Use xts() to create smith
+smith &lt;- xts(x = data, order.by = dates)
+
+# Create bday (1899-05-08) using a POSIXct date class object
+bday &lt;- as.POSIXct(&quot;1899-05-08&quot;)
+
+# Create hayek and add a new attribute called born
+hayek &lt;- xts(x = data, order.by = dates, born = bday)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>It is best to think of xts objects as normal R matrices, but with special powers. These powers let you manipulate your data as a function of time, as your data is now self-aware of when it exists in time</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBFeHRyYWN0IHRoZSAzcmQgb2JzZXJ2YXRpb24gb2YgdGhlIDJuZCBjb2x1bW4gb2YgZXhfbWF0cml4XG5oYXlla1szLDFdXG5cbmBgYCJ9 -->
+<pre class="r"><code># Extract the 3rd observation of the 2nd column of ex_matrix
+hayek[3,1]
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgICAgICAgICBbLDFdXG4yMDE2LTAxLTAzIC0wLjk1NzY3NTZcbiJ9 -->
+<pre><code>                 [,1]
+2016-01-03 -0.9576756</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CiMgTG9hZCB4dHMKbGlicmFyeSh4dHMpCmBgYAoKCnh0cyBvYmplY3RzIGFyZSBzaW1wbGUuIFRoaW5rIG9mIHRoZW0gYXMgYSBtYXRyaXggb2Ygb2JzZXJ2YXRpb25zIGNvbWJpbmVkIHdpdGggYW4gaW5kZXggb2YgY29ycmVzcG9uZGluZyBkYXRlcyBhbmQgdGltZXMuCgpUaGUgbWFpbiB4dHMgY29uc3RydWN0b3IgdGFrZXMgYSBudW1iZXIgb2YgYXJndW1lbnRzLCBidXQgdGhlIHR3byBtb3N0IGltcG9ydGFudCBhcmUgeCBmb3IgdGhlIGRhdGEgYW5kIG9yZGVyLmJ5IGZvciB0aGUgaW5kZXguIHggbXVzdCBiZSBhIHZlY3RvciBvciBtYXRyaXguIG9yZGVyLmJ5IGlzIGEgdmVjdG9yIHdoaWNoIG11c3QgYmUgdGhlIHNhbWUgbGVuZ3RoIG9yIG51bWJlciBvZiByb3dzIGFzIHgsIGJlIGEgcHJvcGVyIHRpbWUgb3IgZGF0ZSBvYmplY3QgKHZlcnkgaW1wb3J0YW50ISksIGFuZCBiZSBpbiBpbmNyZWFzaW5nIG9yZGVyLgoKeHRzIGFsc28gYWxsb3dzIHlvdSB0byBiaW5kIGFyYml0cmFyeSBrZXktdmFsdWUgYXR0cmlidXRlcyB0byB5b3VyIGRhdGEuIFRoaXMgbGV0cyB5b3Uga2VlcCBtZXRhZGF0YSBhYm91dCB5b3VyIG9iamVjdCBpbnNpZGUgeW91ciBvYmplY3QuIFRvIGFkZCB0aGVzZSBhdCBjcmVhdGlvbiwgeW91IHNpbXBseSBwYXNzIGFkZGl0aW9uYWwgbmFtZSA9IHZhbHVlIGFyZ3VtZW50cyB0byB0aGUgeHRzKCkgZnVuY3Rpb24uCgpgYGB7cn0KIyBDcmVhdGUgdGhlIG9iamVjdCBkYXRhIHVzaW5nIDUgcmFuZG9tIG51bWJlcnMKZGF0YSA8LSBybm9ybSg1KQoKIyBDcmVhdGUgZGF0ZXMgYXMgYSBEYXRlIGNsYXNzIG9iamVjdCBzdGFydGluZyBmcm9tIDIwMTYtMDEtMDEKZGF0ZXMgPC0gc2VxKGFzLkRhdGUoIjIwMTYtMDEtMDEiKSwgbGVuZ3RoID0gNSwgYnkgPSAiZGF5cyIpCgojIFVzZSB4dHMoKSB0byBjcmVhdGUgc21pdGgKc21pdGggPC0geHRzKHggPSBkYXRhLCBvcmRlci5ieSA9IGRhdGVzKQoKIyBDcmVhdGUgYmRheSAoMTg5OS0wNS0wOCkgdXNpbmcgYSBQT1NJWGN0IGRhdGUgY2xhc3Mgb2JqZWN0CmJkYXkgPC0gYXMuUE9TSVhjdCgiMTg5OS0wNS0wOCIpCgojIENyZWF0ZSBoYXllayBhbmQgYWRkIGEgbmV3IGF0dHJpYnV0ZSBjYWxsZWQgYm9ybgpoYXllayA8LSB4dHMoeCA9IGRhdGEsIG9yZGVyLmJ5ID0gZGF0ZXMsIGJvcm4gPSBiZGF5KQpgYGAKCkl0IGlzIGJlc3QgdG8gdGhpbmsgb2YgeHRzIG9iamVjdHMgYXMgbm9ybWFsIFIgbWF0cmljZXMsIGJ1dCB3aXRoIHNwZWNpYWwgcG93ZXJzLiBUaGVzZSBwb3dlcnMgbGV0IHlvdSBtYW5pcHVsYXRlIHlvdXIgZGF0YSBhcyBhIGZ1bmN0aW9uIG9mIHRpbWUsIGFzIHlvdXIgZGF0YSBpcyBub3cgc2VsZi1hd2FyZSBvZiB3aGVuIGl0IGV4aXN0cyBpbiB0aW1lCgpgYGB7cn0KIyBWaWV3IHRoZSBzdHJ1Y3R1cmUgb2YgZXhfbWF0cml4CnN0cihoYXllaykKCiMgRXh0cmFjdCB0aGUgM3JkIG9ic2VydmF0aW9uIG9mIHRoZSAybmQgY29sdW1uIG9mIGV4X21hdHJpeApoYXlla1szLDFdCgpgYGAKCg==</div>
 
 
 

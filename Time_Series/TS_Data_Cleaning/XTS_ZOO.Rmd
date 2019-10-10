@@ -3,3 +3,43 @@ title: "R Notebook"
 output: html_notebook
 ---
 
+```{r}
+# Load xts
+library(xts)
+```
+
+
+xts objects are simple. Think of them as a matrix of observations combined with an index of corresponding dates and times.
+
+The main xts constructor takes a number of arguments, but the two most important are x for the data and order.by for the index. x must be a vector or matrix. order.by is a vector which must be the same length or number of rows as x, be a proper time or date object (very important!), and be in increasing order.
+
+xts also allows you to bind arbitrary key-value attributes to your data. This lets you keep metadata about your object inside your object. To add these at creation, you simply pass additional name = value arguments to the xts() function.
+
+```{r}
+# Create the object data using 5 random numbers
+data <- rnorm(5)
+
+# Create dates as a Date class object starting from 2016-01-01
+dates <- seq(as.Date("2016-01-01"), length = 5, by = "days")
+
+# Use xts() to create smith
+smith <- xts(x = data, order.by = dates)
+
+# Create bday (1899-05-08) using a POSIXct date class object
+bday <- as.POSIXct("1899-05-08")
+
+# Create hayek and add a new attribute called born
+hayek <- xts(x = data, order.by = dates, born = bday)
+```
+
+It is best to think of xts objects as normal R matrices, but with special powers. These powers let you manipulate your data as a function of time, as your data is now self-aware of when it exists in time
+
+```{r}
+# View the structure of ex_matrix
+str(hayek)
+
+# Extract the 3rd observation of the 2nd column of ex_matrix
+hayek[3,1]
+
+```
+

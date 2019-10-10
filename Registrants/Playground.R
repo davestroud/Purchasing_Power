@@ -1,14 +1,12 @@
-library(lubridate)
-library(readr)
-
+# Load xts
+library(xts)
 
 reg_ts = read.csv("Registrants/Registrants.csv", stringsAsFactors = FALSE)
 
-myts <- ts(reg_ts, start = c(2015, 1), end = c(2019, 10), frequency = 12)
 
+# View the structure of ex_matrix
+str(reg_ts)
 
+# Extract the 3rd observation of the 2nd column of ex_matrix
+reg_ts[3,2]
 
-
-
-start(reg_ts$REGDATE)
-end(reg_ts$REGDATE)
