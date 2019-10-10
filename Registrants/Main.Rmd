@@ -10,6 +10,7 @@ https://www.earthdatascience.org/courses/earth-analytics/time-series-data/subset
 library(lubridate)
 library(ggplot2)
 library(dplyr) # for data cleaning
+library(tidyverse)
 ```
 
 ```{r}
@@ -36,12 +37,45 @@ summary(registrants$REGISTRANTS)
 ```
 
 
+```{r}
+reg_ts <- ts(registrants[,2], start = c(2015,1), frequency = 1)
+# registrants$REGDATE <- as.Date(registrants$REGDATE,
+                               #format = "%d/%m/%y")
+```
+
+
+```{r}
+plot(reg_ts)
+```
+
+
+
+
+```{r}
+ggplot(data = registrants, aes(x = REGDATE, y = r)) +
+  geom_point() + 
+  labs(title = "Registrants")
+```
 
 
 
 
 
 
+```{r}
+class(reg_ts)
+start(reg_ts)
+end(reg_ts)
+frequency(reg_ts)
+```
+
+```{r}
+plot(reg_ts)
+```
+
+```{r}
+
+```
 
 
 
