@@ -112,6 +112,8 @@ head(am2)
 
 You can now convert data to xts using as.xts(). However, in most real world applications you will often need to read raw data from files on disk or the web. This can be challenging without knowing the right commands.
 
+Read in a csv file from disk using the base-R read.csv. After you read the data, the next step is to convert it to xts. Here you will be required to use the xts() constructor as well as deal with converting non-standard dates into something that xts understands.
+
 ```{r}
 # Create data by reading in file from the Internet
 data <- read.csv("https://s3.amazonaws.com/assets.datacamp.com/production/course_1127/datasets/tmp_file.csv")
