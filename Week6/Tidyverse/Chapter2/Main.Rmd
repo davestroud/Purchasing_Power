@@ -1,0 +1,61 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+Load the ggplot2 package after the gapminder and dplyr packages.
+Filter gapminder for observations from the year 1952, and assign it to a new dataset gapminder_1952 using the assignment operator (<-).
+
+To assign a new dataset, you would do gapminder_1952 <-, then create your filtered dataset with dplyr's filter().
+
+```{r}
+# Load the ggplot2 package as well
+library(gapminder)
+library(dplyr)
+library(ggplot2)
+
+# Create gapminder_1952
+gapminder_1952 <- gapminder %>%
+  filter(year == 1952)
+```
+
+Change the scatter plot of gapminder_1952 so that (pop) is on the x-axis and GDP per capita (gdpPercap) is on the y-axis.
+
+```{r}
+
+# Change to put pop on the x-axis and gdpPercap on the y-axis
+ggplot(gapminder_1952, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point()
+```
+
+Use ggplot2 to create a scatter plot from scratch, to compare each country's population with its life expectancy in the year 1952.
+
+Create a scatter plot of gapminder_1952 with population (pop) is on the x-axis and life expectancy (lifeExp) on the y-axis.
+
+```{r}
+# Create a scatter plot with pop on the x-axis and lifeExp on the y-axis
+ggplot(gapminder_1952, aes(x = pop, y = lifeExp)) +
+  geom_point()
+```
+
+You previously created a scatter plot with population on the x-axis and life expectancy on the y-axis. Since population is spread over several orders of magnitude, with some countries having a much higher population than others, it's a good idea to put the x-axis on a log scale.
+
+Change the existing scatter plot (code provided) to put the x-axis (representing population) on a log scale.
+
+
+```{r}
+gapminder_1952 <- gapminder %>%
+  filter(year == 1952)
+
+# Change this plot to put the x-axis on a log scale
+ggplot(gapminder_1952, aes(x = pop, y = lifeExp)) +
+  geom_point() +
+  scale_x_log10()
+```
+
+
+
+
+
+
