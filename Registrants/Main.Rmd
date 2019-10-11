@@ -5,22 +5,12 @@ output: html_notebook
 Resources:
 https://www.earthdatascience.org/courses/earth-analytics/time-series-data/subset-time-series-data-in-r/
 
+mydata <- read_exc
+
 
 ```{r}
-library(xts)
+my_data <- read.csv("Registrants.csv")
 ```
-
-```{r}
-# Load in data set
-registrants <- read.csv("Registrants.csv")
-```
-
-```{r}
-# xts(registrants, order.by = as.Date(rownames(registrants), "%d/%m/%Y"))
-# data_zoo <- read.zoo(registrants, index.column = 0, sep=",", format = "%d/%m/%Y")
-```
-
-
 
 
 

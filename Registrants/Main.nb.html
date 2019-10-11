@@ -1750,32 +1750,28 @@ summary {
 
 <!-- rnb-text-begin -->
 <p>Resources: <a href="https://www.earthdatascience.org/courses/earth-analytics/time-series-data/subset-time-series-data-in-r/" class="uri">https://www.earthdatascience.org/courses/earth-analytics/time-series-data/subset-time-series-data-in-r/</a></p>
+<p>mydata &lt;- read_exc</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh4dHMpXG5gYGAifQ== -->
-<pre class="r"><code>library(xts)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh4bHN4amFycylcbmBgYCJ9 -->
+<pre class="r"><code>library(xlsxjars)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBMb2FkIGluIGRhdGEgc2V0XG5yZWdpc3RyYW50cyA8LSByZWFkLmNzdihcIlJlZ2lzdHJhbnRzLmNzdlwiKVxuYGBgIn0= -->
-<pre class="r"><code># Load in data set
-registrants &lt;- read.csv(&quot;Registrants.csv&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyB4dHMocmVnaXN0cmFudHMsIG9yZGVyLmJ5ID0gYXMuRGF0ZShyb3duYW1lcyhyZWdpc3RyYW50cyksIFwiJWQvJW0vJVlcIikpXG4jIGRhdGFfem9vIDwtIHJlYWQuem9vKHJlZ2lzdHJhbnRzLCBpbmRleC5jb2x1bW4gPSAwLCBzZXA9XCIsXCIsIGZvcm1hdCA9IFwiJWQvJW0vJVlcIilcbmBgYCJ9 -->
-<pre class="r"><code># xts(registrants, order.by = as.Date(rownames(registrants), &quot;%d/%m/%Y&quot;))
-# data_zoo &lt;- read.zoo(registrants, index.column = 0, sep=&quot;,&quot;, format = &quot;%d/%m/%Y&quot;)</code></pre>
-<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBySmF2YVxuRXJyb3I6IHBhY2thZ2Ugb3IgbmFtZXNwYWNlIGxvYWQgZmFpbGVkIGZvciDigJhySmF2YeKAmTpcbiAub25Mb2FkIGZhaWxlZCBpbiBsb2FkTmFtZXNwYWNlKCkgZm9yICdySmF2YScsIGRldGFpbHM6XG4gIGNhbGw6IGR5bi5sb2FkKGZpbGUsIERMTHBhdGggPSBETExwYXRoLCAuLi4pXG4gIGVycm9yOiB1bmFibGUgdG8gbG9hZCBzaGFyZWQgb2JqZWN0ICcvTGlicmFyeS9GcmFtZXdvcmtzL1IuZnJhbWV3b3JrL1ZlcnNpb25zLzMuNi9SZXNvdXJjZXMvbGlicmFyeS9ySmF2YS9saWJzL3JKYXZhLnNvJzpcbiAgZGxvcGVuKC9MaWJyYXJ5L0ZyYW1ld29ya3MvUi5mcmFtZXdvcmsvVmVyc2lvbnMvMy42L1Jlc291cmNlcy9saWJyYXJ5L3JKYXZhL2xpYnMvckphdmEuc28sIDYpOiBMaWJyYXJ5IG5vdCBsb2FkZWQ6IC9MaWJyYXJ5L0phdmEvSmF2YVZpcnR1YWxNYWNoaW5lcy9qZGstMTEuMC4xLmpkay9Db250ZW50cy9Ib21lL2xpYi9zZXJ2ZXIvbGlianZtLmR5bGliXG4gIFJlZmVyZW5jZWQgZnJvbTogL0xpYnJhcnkvRnJhbWV3b3Jrcy9SLmZyYW1ld29yay9WZXJzaW9ucy8zLjYvUmVzb3VyY2VzL2xpYnJhcnkvckphdmEvbGlicy9ySmF2YS5zb1xuICBSZWFzb246IGltYWdlIG5vdCBmb3VuZFxuRXJyb3I6IHBhY2thZ2Ug4oCYckphdmHigJkgY291bGQgbm90IGJlIGxvYWRlZFxuIn0= -->
+<pre><code>Loading required package: rJava
+Error: package or namespace load failed for ‘rJava’:
+ .onLoad failed in loadNamespace() for 'rJava', details:
+  call: dyn.load(file, DLLpath = DLLpath, ...)
+  error: unable to load shared object '/Library/Frameworks/R.framework/Versions/3.6/Resources/library/rJava/libs/rJava.so':
+  dlopen(/Library/Frameworks/R.framework/Versions/3.6/Resources/library/rJava/libs/rJava.so, 6): Library not loaded: /Library/Java/JavaVirtualMachines/jdk-11.0.1.jdk/Contents/Home/lib/server/libjvm.dylib
+  Referenced from: /Library/Frameworks/R.framework/Versions/3.6/Resources/library/rJava/libs/rJava.so
+  Reason: image not found
+Error: package ‘rJava’ could not be loaded</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUmVnaXN0cmFudHMiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KUmVzb3VyY2VzOgpodHRwczovL3d3dy5lYXJ0aGRhdGFzY2llbmNlLm9yZy9jb3Vyc2VzL2VhcnRoLWFuYWx5dGljcy90aW1lLXNlcmllcy1kYXRhL3N1YnNldC10aW1lLXNlcmllcy1kYXRhLWluLXIvCgoKYGBge3J9CmxpYnJhcnkoeHRzKQpgYGAKCmBgYHtyfQojIExvYWQgaW4gZGF0YSBzZXQKcmVnaXN0cmFudHMgPC0gcmVhZC5jc3YoIlJlZ2lzdHJhbnRzLmNzdiIpCmBgYAoKYGBge3J9CiMgeHRzKHJlZ2lzdHJhbnRzLCBvcmRlci5ieSA9IGFzLkRhdGUocm93bmFtZXMocmVnaXN0cmFudHMpLCAiJWQvJW0vJVkiKSkKIyBkYXRhX3pvbyA8LSByZWFkLnpvbyhyZWdpc3RyYW50cywgaW5kZXguY29sdW1uID0gMCwgc2VwPSIsIiwgZm9ybWF0ID0gIiVkLyVtLyVZIikKYGBgCgoKCgoKCgoKCgoKCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUmVnaXN0cmFudHMiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KUmVzb3VyY2VzOgpodHRwczovL3d3dy5lYXJ0aGRhdGFzY2llbmNlLm9yZy9jb3Vyc2VzL2VhcnRoLWFuYWx5dGljcy90aW1lLXNlcmllcy1kYXRhL3N1YnNldC10aW1lLXNlcmllcy1kYXRhLWluLXIvCgpteWRhdGEgPC0gcmVhZF9leGMKCgpgYGB7cn0KbXlfZGF0YSA8LSByZWFkLmNzdigiUmVnaXN0cmFudHMuY3N2IikKYGBgCgoKCgoKCgoKCgo=</div>
 
 
 
