@@ -110,7 +110,16 @@ head(am2)
 
 ```
 
+You can now convert data to xts using as.xts(). However, in most real world applications you will often need to read raw data from files on disk or the web. This can be challenging without knowing the right commands.
 
+```{r}
+# Create data by reading in file from the Internet
+data <- read.csv("https://s3.amazonaws.com/assets.datacamp.com/production/course_1127/datasets/tmp_file.csv")
+
+# Convert data into xts named data_ts
+ data_ts <- xts(data, order.by = as.Date(rownames(data), "%m/%d/%Y"))
+
+```
 
 
 
