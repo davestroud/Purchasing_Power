@@ -7,54 +7,17 @@ https://www.earthdatascience.org/courses/earth-analytics/time-series-data/subset
 
 
 ```{r}
-library(lubridate)
-library(ggplot2)
-library(dplyr) # for data cleaning
-library(tidyverse)
+library(xts)
 ```
 
 ```{r}
 # Load in data set
-registrants <- read.csv("Registrants.csv", stringsAsFactors = FALSE, header = TRUE)
+registrants <- read.csv("Registrants.csv")
 ```
 
 ```{r}
-# drop columns that we aren't using; assign new variable
-registrants <-select(registrants, -c(P_CLIENTCODE, Client.ID))
-```
-
-```{r}
-# Date is character and registrants is an integer
-head(registrants)
-```
-
-```{r}
-# view the structure of the data
-str(registrants)
-```
-```{r}
-summary(registrants$REGISTRANTS)
-```
-
-
-```{r}
-reg_ts <- ts(registrants[,2], start = c(2015,1), frequency = 1)
-# registrants$REGDATE <- as.Date(registrants$REGDATE,
-                               #format = "%d/%m/%y")
-```
-
-
-```{r}
-plot(reg_ts)
-```
-
-
-
-
-```{r}
-ggplot(data = registrants, aes(x = REGDATE, y = r)) +
-  geom_point() + 
-  labs(title = "Registrants")
+# xts(registrants, order.by = as.Date(rownames(registrants), "%d/%m/%Y"))
+# data_zoo <- read.zoo(registrants, index.column = 0, sep=",", format = "%d/%m/%Y")
 ```
 
 
@@ -62,20 +25,6 @@ ggplot(data = registrants, aes(x = REGDATE, y = r)) +
 
 
 
-```{r}
-class(reg_ts)
-start(reg_ts)
-end(reg_ts)
-frequency(reg_ts)
-```
-
-```{r}
-plot(reg_ts)
-```
-
-```{r}
-
-```
 
 
 
