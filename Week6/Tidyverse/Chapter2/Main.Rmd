@@ -75,7 +75,7 @@ gapminder_1952 <- gapminder %>%
 # Scatter plot comparing pop and lifeExp, with color representing continent
 ggplot(gapminder_1952, aes(x = pop, y = lifeExp, color = continent)) +
   geom_point() +
-  scale_x_log10()
+  scale_x_log10() 
 ```
 
 Modify the scatter plot so that the size of the points represents each country's GDP per capita (gdpPercap).
