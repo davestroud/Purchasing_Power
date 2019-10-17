@@ -11,13 +11,13 @@ Well, we're going to find out! The Nobel Foundation has made a dataset available
 
 ```{r}
 # Loading in required libraries
-# ... YOUR CODE FOR TASK 1 ...
+library(tidyverse)
 
 # Reading in the Nobel Prize data
-nobel = ...
+nobel <- read_csv("nobel.csv")
 
-# Taking a look at the first several winners
-# ... YOUR CODE FOR TASK 1 ...
+# Taking a look at the first couple of winners
+head(nobel)
 ```
 
 2. So, who gets the Nobel Prize?
@@ -26,46 +26,51 @@ Just looking at the first couple of prize winners, or Nobel laureates as they ar
 (For country, we will use the birth_country of the winner, as the organization_country is NaN for all shared Nobel Prizes.)
 
 ```{r}
-# Display the number of (possibly shared) Nobel Prizes handed
+# Counting the number of (possibly shared) Nobel Prizes handed
 # out between 1901 and 2016
-# ... YOUR CODE FOR TASK 2 ...
+nobel %>% count()
 
-# Display the number of prizes won by male and female recipients.
-# ... YOUR CODE FOR TASK 2 ...
+# Counting the number of prizes won by male and female recipients.
+nobel %>%
+    count(sex)
 
-# Display the number of prizes won by the top 10 nationalities.
-# ... YOUR CODE FOR TASK 2 ...
+# Counting the number of prizes won by different nationalities.
+nobel %>%
+    count(birth_country) %>%
+    arrange(desc(n)) %>%
+    head(20)
 ```
+
 
 3. USA dominance
 Not so surprising perhaps: the most common Nobel laureate between 1901 and 2016 was a man born in the United States of America. But in 1901 all the winners were European. When did the USA start to dominate the Nobel Prize charts?
 
 ```{r}
 # Calculating the proportion of USA born winners per decade
-nobel['usa_born_winner'] = ...
-nobel['decade'] = ...
-prop_usa_winners = ...
+prop_usa_winners <- nobel %>% 
+    mutate(
+          usa_born_winner = birth_country == "United States of America",
+          decade = floor(year / 10) * 10
+    ) %>%
+    group_by(decade) %>%
+    summarize(proportion = mean(usa_born_winner, na.rm = TRUE))
 
 # Display the proportions of USA born winners per decade
-# ... YOUR CODE FOR TASK 3 ...
+prop_usa_winners
 ```
 
 4. USA dominance, visualized
 A table is OK, but to see when the USA started to dominate the Nobel charts we need a plot!
 
 ```{r}
-# Setting the plotting theme
-sns.set()
-# and setting the size of all plots.
-import matplotlib.pyplot as plt
-plt.rcParams['figure.figsize'] = [11, 7]
+# Setting the size of plots in this notebook
+options(repr.plot.width=7, repr.plot.height=4)
 
-# Plotting USA born winners 
-ax = ...
-
-# Adding %-formatting to the y-axis
-from matplotlib.ticker import PercentFormatter
-# ... YOUR CODE FOR TASK 4 ...
+# Plotting USA born winners
+ggplot(prop_usa_winners, aes(x = decade, y = proportion)) +
+    geom_line() +
+    geom_point() +
+    scale_y_continuous(labels = scales::percent, limits = 0:1, expand = c(0, 0))
 ```
 
 5. What is the gender of a typical Nobel Prize winner?
@@ -73,11 +78,19 @@ So the USA became the dominating winner of the Nobel Prize first in the 1930s an
 
 ```{r}
 # Calculating the proportion of female laureates per decade
-nobel['female_winner'] = ...
-prop_female_winners = ...
+prop_female_winners <- nobel %>%
+    mutate(
+        female_winner = sex == "Female",
+        decade = floor(year / 10) * 10
+    ) %>%
+    group_by(decade, category) %>%
+    summarize(proportion = mean(female_winner, na.rm = TRUE))
 
-# Plotting USA born winners with % winners on the y-axis
-# ... YOUR CODE FOR TASK 5 ...
+# Plotting the proportion of female laureates per decade
+ggplot(prop_female_winners, aes(x = decade, y = proportion, color = category)) +
+    geom_line() +
+    geom_point() +
+    scale_y_continuous(labels = scales::percent, limits = 0:1, expand = c(0, 0))
 ```
 
 6. The first woman to win the Nobel Prize
@@ -87,7 +100,9 @@ Given this imbalance, who was the first woman to receive a Nobel Prize? And in w
 
 ```{r}
 # Picking out the first woman to win a Nobel Prize
-# ... YOUR CODE FOR TASK 5 ...
+nobel %>%
+    filter(sex == "Female") %>%
+    top_n(1, desc(year))
 ```
 
 7. Repeat laureates
@@ -95,7 +110,9 @@ For most scientists/writers/activists a Nobel Prize would be the crowning achiev
 
 ```{r}
 # Selecting the laureates that have received 2 or more prizes.
-# ... YOUR CODE FOR TASK 5 ...
+nobel %>%
+    count(full_name) %>%
+    filter(n > 1)
 ```
 
 8. How old are you when you get the prize?
@@ -104,14 +121,17 @@ The list of repeat winners contains some illustrious names! We again meet Marie 
 But how old are you generally when you get the prize?
 
 ```{r}
-# Converting birth_date from String to datetime
-nobel['birth_date'] = ...
+# Loading the lubridate package
+library(lubridate)
 
 # Calculating the age of Nobel Prize winners
-nobel['age'] = ...
+nobel_age <- nobel %>%
+    mutate(age = year - year(birth_date))
 
 # Plotting the age of Nobel Prize winners
-# ... YOUR CODE FOR TASK 8 ...
+ggplot(nobel_age, aes(x = age, y = year)) +
+    geom_point() +
+    geom_smooth()
 ```
 
 9. Age differences between prize categories
@@ -122,8 +142,11 @@ We also see that the density of points is much high nowadays than in the early 1
 Let's look at age trends within different prize categories.
 
 ```{r}
-# Same plot as above, but separate plots for each type of Nobel Prize
-# ... YOUR CODE FOR TASK 9 ...
+# Same plot as above, but faceted by the category of the Nobel Prize
+ggplot(nobel_age, aes(x = age, y = year)) +
+    geom_point() +
+    geom_smooth(se = FALSE) +
+    facet_wrap(~ category)
 ```
 
 10. Oldest and youngest winners
@@ -133,10 +156,10 @@ In the peace category we also a winner around 2010 that seems exceptionally youn
 
 ```{r}
 # The oldest winner of a Nobel Prize as of 2016
-# ... YOUR CODE FOR TASK 10 ...
+nobel_age %>% top_n(1, age)
 
 # The youngest winner of a Nobel Prize as of 2016
-# ... YOUR CODE FOR TASK 10 ...
+nobel_age %>% top_n(1, desc(age))
 ```
 
 11. You get a prize!
@@ -148,7 +171,7 @@ Before you leave, what was again the name of the youngest winner ever who in 201
 
 ```{r}
 # The name of the youngest winner of the Nobel Prize as of 2016
-youngest_winner = '...'
+youngest_winner = 'Malala Yousafzai'
 ```
 
 

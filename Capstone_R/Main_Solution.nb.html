@@ -1756,16 +1756,58 @@ summary {
 <p>Well, we’re going to find out! The Nobel Foundation has made a dataset available of all prize winners from the start of the prize, in 1901, to 2016. Let’s load it in and take a look.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBMb2FkaW5nIGluIHJlcXVpcmVkIGxpYnJhcmllc1xuIyAuLi4gWU9VUiBDT0RFIEZPUiBUQVNLIDEgLi4uXG5cbiMgUmVhZGluZyBpbiB0aGUgTm9iZWwgUHJpemUgZGF0YVxubm9iZWwgPSAuLi5cblxuIyBUYWtpbmcgYSBsb29rIGF0IHRoZSBmaXJzdCBzZXZlcmFsIHdpbm5lcnNcbiMgLi4uIFlPVVIgQ09ERSBGT1IgVEFTSyAxIC4uLlxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBMb2FkaW5nIGluIHJlcXVpcmVkIGxpYnJhcmllc1xubGlicmFyeSh0aWR5dmVyc2UpXG5gYGAifQ== -->
 <pre class="r"><code># Loading in required libraries
-# ... YOUR CODE FOR TASK 1 ...
-
-# Reading in the Nobel Prize data
-nobel = ...
-
-# Taking a look at the first several winners
-# ... YOUR CODE FOR TASK 1 ...</code></pre>
+library(tidyverse)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXHUwMDFiWzMwbeKUgOKUgCBcdTAwMWJbMW1BdHRhY2hpbmcgcGFja2FnZXNcdTAwMWJbMjJtIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgCB0aWR5dmVyc2UgMS4yLjEg4pSA4pSAXHUwMDFiWzM5bVxuXHUwMDFiWzMwbVx1MDAxYlszMm3inJRcdTAwMWJbMzBtIFx1MDAxYlszNG1nZ3Bsb3QyXHUwMDFiWzMwbSAzLjIuMSAgICAgXHUwMDFiWzMybeKclFx1MDAxYlszMG0gXHUwMDFiWzM0bXB1cnJyICBcdTAwMWJbMzBtIDAuMy4yXG5cdTAwMWJbMzJt4pyUXHUwMDFiWzMwbSBcdTAwMWJbMzRtdGliYmxlIFx1MDAxYlszMG0gMi4xLjMgICAgIFx1MDAxYlszMm3inJRcdTAwMWJbMzBtIFx1MDAxYlszNG1kcGx5ciAgXHUwMDFiWzMwbSAwLjguM1xuXHUwMDFiWzMybeKclFx1MDAxYlszMG0gXHUwMDFiWzM0bXRpZHlyICBcdTAwMWJbMzBtIDEuMC4wICAgICBcdTAwMWJbMzJt4pyUXHUwMDFiWzMwbSBcdTAwMWJbMzRtc3RyaW5nclx1MDAxYlszMG0gMS40LjBcblx1MDAxYlszMm3inJRcdTAwMWJbMzBtIFx1MDAxYlszNG1yZWFkciAgXHUwMDFiWzMwbSAxLjMuMSAgICAgXHUwMDFiWzMybeKclFx1MDAxYlszMG0gXHUwMDFiWzM0bWZvcmNhdHNcdTAwMWJbMzBtIDAuNC4wXHUwMDFiWzM5bVxuXHUwMDFiWzMwbeKUgOKUgCBcdTAwMWJbMW1Db25mbGljdHNcdTAwMWJbMjJtIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgCB0aWR5dmVyc2VfY29uZmxpY3RzKCkg4pSA4pSAXG5cdTAwMWJbMzFt4pyWXHUwMDFiWzMwbSBcdTAwMWJbMzRtZHBseXJcdTAwMWJbMzBtOjpcdTAwMWJbMzJtZmlsdGVyKClcdTAwMWJbMzBtIG1hc2tzIFx1MDAxYlszNG1zdGF0c1x1MDAxYlszMG06OmZpbHRlcigpXG5cdTAwMWJbMzFt4pyWXHUwMDFiWzMwbSBcdTAwMWJbMzRtZHBseXJcdTAwMWJbMzBtOjpcdTAwMWJbMzJtbGFnKClcdTAwMWJbMzBtICAgIG1hc2tzIFx1MDAxYlszNG1zdGF0c1x1MDAxYlszMG06OmxhZygpXHUwMDFiWzM5bVxuIn0= -->
+<pre><code>[30m── [1mAttaching packages[22m ────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──[39m
+[30m[32m✔[30m [34mggplot2[30m 3.2.1     [32m✔[30m [34mpurrr  [30m 0.3.2
+[32m✔[30m [34mtibble [30m 2.1.3     [32m✔[30m [34mdplyr  [30m 0.8.3
+[32m✔[30m [34mtidyr  [30m 1.0.0     [32m✔[30m [34mstringr[30m 1.4.0
+[32m✔[30m [34mreadr  [30m 1.3.1     [32m✔[30m [34mforcats[30m 0.4.0[39m
+[30m── [1mConflicts[22m ───────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+[31m✖[30m [34mdplyr[30m::[32mfilter()[30m masks [34mstats[30m::filter()
+[31m✖[30m [34mdplyr[30m::[32mlag()[30m    masks [34mstats[30m::lag()[39m</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBSZWFkaW5nIGluIHRoZSBOb2JlbCBQcml6ZSBkYXRhXG5ub2JlbCA8LSByZWFkX2NzdihcIm5vYmVsLmNzdlwiKVxuYGBgIn0= -->
+<pre class="r"><code># Reading in the Nobel Prize data
+nobel &lt;- read_csv(&quot;nobel.csv&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUGFyc2VkIHdpdGggY29sdW1uIHNwZWNpZmljYXRpb246XG5jb2xzKFxuICB5ZWFyID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIGNhdGVnb3J5ID0gXHUwMDFiWzMxbWNvbF9jaGFyYWN0ZXIoKVx1MDAxYlszOW0sXG4gIHByaXplID0gXHUwMDFiWzMxbWNvbF9jaGFyYWN0ZXIoKVx1MDAxYlszOW0sXG4gIG1vdGl2YXRpb24gPSBcdTAwMWJbMzFtY29sX2NoYXJhY3RlcigpXHUwMDFiWzM5bSxcbiAgcHJpemVfc2hhcmUgPSBcdTAwMWJbMzFtY29sX2NoYXJhY3RlcigpXHUwMDFiWzM5bSxcbiAgbGF1cmVhdGVfaWQgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgbGF1cmVhdGVfdHlwZSA9IFx1MDAxYlszMW1jb2xfY2hhcmFjdGVyKClcdTAwMWJbMzltLFxuICBmdWxsX25hbWUgPSBcdTAwMWJbMzFtY29sX2NoYXJhY3RlcigpXHUwMDFiWzM5bSxcbiAgYmlydGhfZGF0ZSA9IFx1MDAxYlszNG1jb2xfZGF0ZShmb3JtYXQgPSBcIlwiKVx1MDAxYlszOW0sXG4gIGJpcnRoX2NpdHkgPSBcdTAwMWJbMzFtY29sX2NoYXJhY3RlcigpXHUwMDFiWzM5bSxcbiAgYmlydGhfY291bnRyeSA9IFx1MDAxYlszMW1jb2xfY2hhcmFjdGVyKClcdTAwMWJbMzltLFxuICBzZXggPSBcdTAwMWJbMzFtY29sX2NoYXJhY3RlcigpXHUwMDFiWzM5bSxcbiAgb3JnYW5pemF0aW9uX25hbWUgPSBcdTAwMWJbMzFtY29sX2NoYXJhY3RlcigpXHUwMDFiWzM5bSxcbiAgb3JnYW5pemF0aW9uX2NpdHkgPSBcdTAwMWJbMzFtY29sX2NoYXJhY3RlcigpXHUwMDFiWzM5bSxcbiAgb3JnYW5pemF0aW9uX2NvdW50cnkgPSBcdTAwMWJbMzFtY29sX2NoYXJhY3RlcigpXHUwMDFiWzM5bSxcbiAgZGVhdGhfZGF0ZSA9IFx1MDAxYlszNG1jb2xfZGF0ZShmb3JtYXQgPSBcIlwiKVx1MDAxYlszOW0sXG4gIGRlYXRoX2NpdHkgPSBcdTAwMWJbMzFtY29sX2NoYXJhY3RlcigpXHUwMDFiWzM5bSxcbiAgZGVhdGhfY291bnRyeSA9IFx1MDAxYlszMW1jb2xfY2hhcmFjdGVyKClcdTAwMWJbMzltXG4pXG4ifQ== -->
+<pre><code>Parsed with column specification:
+cols(
+  year = [32mcol_double()[39m,
+  category = [31mcol_character()[39m,
+  prize = [31mcol_character()[39m,
+  motivation = [31mcol_character()[39m,
+  prize_share = [31mcol_character()[39m,
+  laureate_id = [32mcol_double()[39m,
+  laureate_type = [31mcol_character()[39m,
+  full_name = [31mcol_character()[39m,
+  birth_date = [34mcol_date(format = &quot;&quot;)[39m,
+  birth_city = [31mcol_character()[39m,
+  birth_country = [31mcol_character()[39m,
+  sex = [31mcol_character()[39m,
+  organization_name = [31mcol_character()[39m,
+  organization_city = [31mcol_character()[39m,
+  organization_country = [31mcol_character()[39m,
+  death_date = [34mcol_date(format = &quot;&quot;)[39m,
+  death_city = [31mcol_character()[39m,
+  death_country = [31mcol_character()[39m
+)</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBUYWtpbmcgYSBsb29rIGF0IHRoZSBmaXJzdCBjb3VwbGUgb2Ygd2lubmVyc1xuaGVhZChub2JlbClcbmBgYCJ9 -->
+<pre class="r"><code># Taking a look at the first couple of winners
+head(nobel)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibmNvbCI6MTgsIm5yb3ciOjZ9LCJyZGYiOiJINHNJQUFBQUFBQUFBN1ZXVFdna1JSU2V6VXdTTXlHN1NSUUZGU3h6TVF2WmFQYW1GK01tN3NZbFdZWkVjVytocHZ2TmRKSHFxdDZxNnBsMDhCRHg0TjI3SUI2RVBTdUN0NEZjUEtxc25qMHNpb0t3ZUJUWjlWVjE5V1M2bVpCZFpBZG1xdWJWKy9uZWUxLzk3RzdldnRxODNhelZhaE8xZXFOUm02amp0REdCUHhkcWpkcU1IUTlydGZxek9GbkU3MFg4VHExLy9rM05maDUzeE0rOHRmTU9aellpaUprMkt2T0M1all6b0toSkZYakpNenNRc29DSjR2OWtDMmd3OXM5MEs4bzBDM1FseHF2dlIwQnV5VFp3MGxMc0NBZ1RaQmlXckwzNXhwcFhYQnFqZUFwblZITjFqS1lMTHJuc1prUXFVb0FldFhweHhNckM5clpQcFBIS1daRURuYXVWYy85c0NkY1ZCTElybUdGU0VOa2hCajNBb1ZGVXFwQUppalhRb0hvc0FFMXdKYUlhRFVRSUNrTFN6cHgyeUhRZ2U0Q2EzcHpUdnJiendKWXhvSnlFbWFDeHhVQkZTS1NPcFdFQlNSUm9iU3VIR0xUa3FRV2dsenl5cnkweW5VREEwTHlDTUdLYUpCS3NqMERHaWRSdVpZWDBJeFpFcE10NkNCVjZMQVNCSlVKOUxqc21JL2lmY3FiakZVS1Z3ZVphQktBNkVEaTNGaGdsaWlJYzlObkd4RWZyY1NkRlU4UEFaZFdXSnNKU29CZG54WVFCenRGTkFmM3ZwUTUyMklMc1MzVkEwQXNXTUkydEkwV1RiSVdBejRzaktJTTFTUktPVmNwaGRDa1QybUJKazhqcU03cGlxNXhuNXNzdkV4QmcwUXJvRXlXcGhaRDNRY1pvYlNIR2xsNVlPQjB3VndTTDA3b0Q5SlZ3Wk03UUpzSWxYYVNaT0tZd2lqZ0lkdHhJeFdTS2FRQk5SckF4emdWMnpqbkZtcG9JbTRaYjlSRitobU5laVUrZURyMFV4RlFkMERiSEtjMDAwV2xidzUwVWhNR0tJdEZzY1RxNEw3RUg4VktGOGZXMTE5Zk9tMTRkTzEwYm5tbGhmbEN0Zi94OVBxcFdQbjcwcXg4ZnVQSHRCOFdSVmtMUWZFK0VETm1KbEhxS2tuTE1sMi9TUUxheGxWc2dGQXR3MHNNbXYyYklsdXgwdk02bHZkUXlzcVhTTUpKeFhKeWF6NzhiTTA3ZUNTWHZrQjYyOEJwRWlvbXVYMTI0Q2VqSWVzM0laaXFvTUxYYXNWMll2NjVPN29ZbmR6RWFhVkd0TXk5LzRVUEdJK0F4MlpCQ0lYVjNUNzRWcGdzQ1MreUtPN2ovRjdFVkcveSs5NFViNzMvbHFqcjRZeU9YLytubHY2MnY1N1V0M1VDVEFjZGdQdnRDMk5pa0JuQjhXTDFkZHFWQm1vUTBIbDRYVkRGZHBMWkZoUTZsNnBEbGJkcEhnbDcyQzFNM2NQLzE2RGlieFcwUUFoS3l2QXV4eHRPUGhaY3JNV2R2Z2QySTNHNjd3dDkxUmNYd2xwckhCbWpOS0ZsdVNhdFZSSjNkNnpOemxGdU9OVndZR3Q0QUZWT1JWVU0zZGlpSC96VXYrMXU0aG1od2czOGc4TVJWZUFobmxlMi91RU5WTzFYZGNScGx6WVdkVk5nVHJxUTRHbXNxajFVeG0vWUJ6dkE2bFh1dHVKcjI1YW42cW9yUFd2WTh2ZmZ2d1BId2w3ZU8zZmpUajQ2UGc1OWZ5c2Q3bitieUg3NGJuUEowNHRGalVuT1k3N0YvQnAxOGFVRFFySnE0MTk0Q2U5dU5ZK1E1TlJoSHBNcml1Y1E3TFUxNUs5cVR1TmlLaTBXK0dkNmJ4Y3NON3p6b3l1SGJiakt4TDViaUxMTnZoSjY3RkFzY2JubGZSM1Q0OXB2bEZOOFA2R1dmRmREbWhpS1RKWVhlVEFlUHRuMkxwL0RlWnNwRSs2RXRma2tTV09wNVQxNGlVM0g2L3F4ck9DdzRLMVdYQ25ia01JNDZMeStNZUh5dXZGQnkzSFEzYVFsUkxobEY1Q1hlY0R5am11aUNybmFVeFZOdXlJeVMvZFdpS1hQNG5iQU1SWXIva3hPd3BEd3RFL2NlUXkzN29KK3NSTG1nS29KTHFYQTM3NVVnU3NYQkZYdFpOdDF5L3Buejg2bVIrV0llc2w1a01GbXdDMFIzNUQzUEtiNW0vWitMbUlMTFlCWEpnSGVOVHhtbGV0VkljM29UQnBJWGtueHpQZndQZ0l2aEJMNE1BQUE9In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["year"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["category"],"name":[2],"type":["chr"],"align":["left"]},{"label":["prize"],"name":[3],"type":["chr"],"align":["left"]},{"label":["motivation"],"name":[4],"type":["chr"],"align":["left"]},{"label":["prize_share"],"name":[5],"type":["chr"],"align":["left"]},{"label":["laureate_id"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["laureate_type"],"name":[7],"type":["chr"],"align":["left"]},{"label":["full_name"],"name":[8],"type":["chr"],"align":["left"]},{"label":["birth_date"],"name":[9],"type":["date"],"align":["right"]},{"label":["birth_city"],"name":[10],"type":["chr"],"align":["left"]},{"label":["birth_country"],"name":[11],"type":["chr"],"align":["left"]},{"label":["sex"],"name":[12],"type":["chr"],"align":["left"]},{"label":["organization_name"],"name":[13],"type":["chr"],"align":["left"]},{"label":["organization_city"],"name":[14],"type":["chr"],"align":["left"]},{"label":["organization_country"],"name":[15],"type":["chr"],"align":["left"]},{"label":["death_date"],"name":[16],"type":["date"],"align":["right"]},{"label":["death_city"],"name":[17],"type":["chr"],"align":["left"]},{"label":["death_country"],"name":[18],"type":["chr"],"align":["left"]}],"data":[{"1":"1901","2":"Chemistry","3":"The Nobel Prize in Chemistry 1901","4":"\"in recognition of the extraordinary services he has rendered by the discovery of the laws of chemical dynamics and osmotic pressure in solutions\"","5":"1/1","6":"160","7":"Individual","8":"Jacobus Henricus van 't Hoff","9":"1852-08-30","10":"Rotterdam","11":"Netherlands","12":"Male","13":"Berlin University","14":"Berlin","15":"Germany","16":"1911-03-01","17":"Berlin","18":"Germany"},{"1":"1901","2":"Literature","3":"The Nobel Prize in Literature 1901","4":"\"in special recognition of his poetic composition, which gives evidence of lofty idealism, artistic perfection and a rare combination of the qualities of both heart and intellect\"","5":"1/1","6":"569","7":"Individual","8":"Sully Prudhomme","9":"1839-03-16","10":"Paris","11":"France","12":"Male","13":"NA","14":"NA","15":"NA","16":"1907-09-07","17":"Châtenay","18":"France"},{"1":"1901","2":"Medicine","3":"The Nobel Prize in Physiology or Medicine 1901","4":"\"for his work on serum therapy, especially its application against diphtheria, by which he has opened a new road in the domain of medical science and thereby placed in the hands of the physician a victorious weapon against illness and deaths\"","5":"1/1","6":"293","7":"Individual","8":"Emil Adolf von Behring","9":"1854-03-15","10":"Hansdorf (Lawice)","11":"Prussia (Poland)","12":"Male","13":"Marburg University","14":"Marburg","15":"Germany","16":"1917-03-31","17":"Marburg","18":"Germany"},{"1":"1901","2":"Peace","3":"The Nobel Peace Prize 1901","4":"NA","5":"1/2","6":"462","7":"Individual","8":"Jean Henry Dunant","9":"1828-05-08","10":"Geneva","11":"Switzerland","12":"Male","13":"NA","14":"NA","15":"NA","16":"1910-10-30","17":"Heiden","18":"Switzerland"},{"1":"1901","2":"Peace","3":"The Nobel Peace Prize 1901","4":"NA","5":"1/2","6":"463","7":"Individual","8":"Frédéric Passy","9":"1822-05-20","10":"Paris","11":"France","12":"Male","13":"NA","14":"NA","15":"NA","16":"1912-06-12","17":"Paris","18":"France"},{"1":"1901","2":"Physics","3":"The Nobel Prize in Physics 1901","4":"\"in recognition of the extraordinary services he has rendered by the discovery of the remarkable rays subsequently named after him\"","5":"1/1","6":"1","7":"Individual","8":"Wilhelm Conrad Röntgen","9":"1845-03-27","10":"Lennep (Remscheid)","11":"Prussia (Germany)","12":"Male","13":"Munich University","14":"Munich","15":"Germany","16":"1923-02-10","17":"Munich","18":"Germany"}],"options":{"columns":{"min":{},"max":[10],"total":[18]},"rows":{"min":[10],"max":[10],"total":[6]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <ol start="2" style="list-style-type: decimal">
@@ -1774,16 +1816,20 @@ nobel = ...
 <p>(For country, we will use the birth_country of the winner, as the organization_country is NaN for all shared Nobel Prizes.)</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBEaXNwbGF5IHRoZSBudW1iZXIgb2YgKHBvc3NpYmx5IHNoYXJlZCkgTm9iZWwgUHJpemVzIGhhbmRlZFxuIyBvdXQgYmV0d2VlbiAxOTAxIGFuZCAyMDE2XG4jIC4uLiBZT1VSIENPREUgRk9SIFRBU0sgMiAuLi5cblxuIyBEaXNwbGF5IHRoZSBudW1iZXIgb2YgcHJpemVzIHdvbiBieSBtYWxlIGFuZCBmZW1hbGUgcmVjaXBpZW50cy5cbiMgLi4uIFlPVVIgQ09ERSBGT1IgVEFTSyAyIC4uLlxuXG4jIERpc3BsYXkgdGhlIG51bWJlciBvZiBwcml6ZXMgd29uIGJ5IHRoZSB0b3AgMTAgbmF0aW9uYWxpdGllcy5cbiMgLi4uIFlPVVIgQ09ERSBGT1IgVEFTSyAyIC4uLlxuYGBgIn0= -->
-<pre class="r"><code># Display the number of (possibly shared) Nobel Prizes handed
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDb3VudGluZyB0aGUgbnVtYmVyIG9mIChwb3NzaWJseSBzaGFyZWQpIE5vYmVsIFByaXplcyBoYW5kZWRcbiMgb3V0IGJldHdlZW4gMTkwMSBhbmQgMjAxNlxubm9iZWwgJT4lIGNvdW50KClcblxuIyBDb3VudGluZyB0aGUgbnVtYmVyIG9mIHByaXplcyB3b24gYnkgbWFsZSBhbmQgZmVtYWxlIHJlY2lwaWVudHMuXG5ub2JlbCAlPiVcbiAgICBjb3VudChzZXgpXG5cbiMgQ291bnRpbmcgdGhlIG51bWJlciBvZiBwcml6ZXMgd29uIGJ5IGRpZmZlcmVudCBuYXRpb25hbGl0aWVzLlxubm9iZWwgJT4lXG4gICAgY291bnQoYmlydGhfY291bnRyeSkgJT4lXG4gICAgYXJyYW5nZShkZXNjKG4pKSAlPiVcbiAgICBoZWFkKDIwKVxuYGBgIn0= -->
+<pre class="r"><code># Counting the number of (possibly shared) Nobel Prizes handed
 # out between 1901 and 2016
-# ... YOUR CODE FOR TASK 2 ...
+nobel %&gt;% count()
 
-# Display the number of prizes won by male and female recipients.
-# ... YOUR CODE FOR TASK 2 ...
+# Counting the number of prizes won by male and female recipients.
+nobel %&gt;%
+    count(sex)
 
-# Display the number of prizes won by the top 10 nationalities.
-# ... YOUR CODE FOR TASK 2 ...</code></pre>
+# Counting the number of prizes won by different nationalities.
+nobel %&gt;%
+    count(birth_country) %&gt;%
+    arrange(desc(n)) %&gt;%
+    head(20)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1792,14 +1838,18 @@ nobel = ...
 </ol>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDYWxjdWxhdGluZyB0aGUgcHJvcG9ydGlvbiBvZiBVU0EgYm9ybiB3aW5uZXJzIHBlciBkZWNhZGVcbm5vYmVsWyd1c2FfYm9ybl93aW5uZXInXSA9IC4uLlxubm9iZWxbJ2RlY2FkZSddID0gLi4uXG5wcm9wX3VzYV93aW5uZXJzID0gLi4uXG5cbiMgRGlzcGxheSB0aGUgcHJvcG9ydGlvbnMgb2YgVVNBIGJvcm4gd2lubmVycyBwZXIgZGVjYWRlXG4jIC4uLiBZT1VSIENPREUgRk9SIFRBU0sgMyAuLi5cbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDYWxjdWxhdGluZyB0aGUgcHJvcG9ydGlvbiBvZiBVU0EgYm9ybiB3aW5uZXJzIHBlciBkZWNhZGVcbnByb3BfdXNhX3dpbm5lcnMgPC0gbm9iZWwgJT4lIFxuICAgIG11dGF0ZShcbiAgICAgICAgICB1c2FfYm9ybl93aW5uZXIgPSBiaXJ0aF9jb3VudHJ5ID09IFwiVW5pdGVkIFN0YXRlcyBvZiBBbWVyaWNhXCIsXG4gICAgICAgICAgZGVjYWRlID0gZmxvb3IoeWVhciAvIDEwKSAqIDEwXG4gICAgKSAlPiVcbiAgICBncm91cF9ieShkZWNhZGUpICU+JVxuICAgIHN1bW1hcml6ZShwcm9wb3J0aW9uID0gbWVhbih1c2FfYm9ybl93aW5uZXIsIG5hLnJtID0gVFJVRSkpXG5cbiMgRGlzcGxheSB0aGUgcHJvcG9ydGlvbnMgb2YgVVNBIGJvcm4gd2lubmVycyBwZXIgZGVjYWRlXG5wcm9wX3VzYV93aW5uZXJzXG5gYGAifQ== -->
 <pre class="r"><code># Calculating the proportion of USA born winners per decade
-nobel['usa_born_winner'] = ...
-nobel['decade'] = ...
-prop_usa_winners = ...
+prop_usa_winners &lt;- nobel %&gt;% 
+    mutate(
+          usa_born_winner = birth_country == &quot;United States of America&quot;,
+          decade = floor(year / 10) * 10
+    ) %&gt;%
+    group_by(decade) %&gt;%
+    summarize(proportion = mean(usa_born_winner, na.rm = TRUE))
 
 # Display the proportions of USA born winners per decade
-# ... YOUR CODE FOR TASK 3 ...</code></pre>
+prop_usa_winners</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1808,19 +1858,15 @@ prop_usa_winners = ...
 </ol>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBTZXR0aW5nIHRoZSBwbG90dGluZyB0aGVtZVxuc25zLnNldCgpXG4jIGFuZCBzZXR0aW5nIHRoZSBzaXplIG9mIGFsbCBwbG90cy5cbmltcG9ydCBtYXRwbG90bGliLnB5cGxvdCBhcyBwbHRcbnBsdC5yY1BhcmFtc1snZmlndXJlLmZpZ3NpemUnXSA9IFsxMSwgN11cblxuIyBQbG90dGluZyBVU0EgYm9ybiB3aW5uZXJzIFxuYXggPSAuLi5cblxuIyBBZGRpbmcgJS1mb3JtYXR0aW5nIHRvIHRoZSB5LWF4aXNcbmZyb20gbWF0cGxvdGxpYi50aWNrZXIgaW1wb3J0IFBlcmNlbnRGb3JtYXR0ZXJcbiMgLi4uIFlPVVIgQ09ERSBGT1IgVEFTSyA0IC4uLlxuYGBgIn0= -->
-<pre class="r"><code># Setting the plotting theme
-sns.set()
-# and setting the size of all plots.
-import matplotlib.pyplot as plt
-plt.rcParams['figure.figsize'] = [11, 7]
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBTZXR0aW5nIHRoZSBzaXplIG9mIHBsb3RzIGluIHRoaXMgbm90ZWJvb2tcbm9wdGlvbnMocmVwci5wbG90LndpZHRoPTcsIHJlcHIucGxvdC5oZWlnaHQ9NClcblxuIyBQbG90dGluZyBVU0EgYm9ybiB3aW5uZXJzXG5nZ3Bsb3QocHJvcF91c2Ffd2lubmVycywgYWVzKHggPSBkZWNhZGUsIHkgPSBwcm9wb3J0aW9uKSkgK1xuICAgIGdlb21fbGluZSgpICtcbiAgICBnZW9tX3BvaW50KCkgK1xuICAgIHNjYWxlX3lfY29udGludW91cyhsYWJlbHMgPSBzY2FsZXM6OnBlcmNlbnQsIGxpbWl0cyA9IDA6MSwgZXhwYW5kID0gYygwLCAwKSlcbmBgYCJ9 -->
+<pre class="r"><code># Setting the size of plots in this notebook
+options(repr.plot.width=7, repr.plot.height=4)
 
-# Plotting USA born winners 
-ax = ...
-
-# Adding %-formatting to the y-axis
-from matplotlib.ticker import PercentFormatter
-# ... YOUR CODE FOR TASK 4 ...</code></pre>
+# Plotting USA born winners
+ggplot(prop_usa_winners, aes(x = decade, y = proportion)) +
+    geom_line() +
+    geom_point() +
+    scale_y_continuous(labels = scales::percent, limits = 0:1, expand = c(0, 0))</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1829,13 +1875,21 @@ from matplotlib.ticker import PercentFormatter
 </ol>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDYWxjdWxhdGluZyB0aGUgcHJvcG9ydGlvbiBvZiBmZW1hbGUgbGF1cmVhdGVzIHBlciBkZWNhZGVcbm5vYmVsWydmZW1hbGVfd2lubmVyJ10gPSAuLi5cbnByb3BfZmVtYWxlX3dpbm5lcnMgPSAuLi5cblxuIyBQbG90dGluZyBVU0EgYm9ybiB3aW5uZXJzIHdpdGggJSB3aW5uZXJzIG9uIHRoZSB5LWF4aXNcbiMgLi4uIFlPVVIgQ09ERSBGT1IgVEFTSyA1IC4uLlxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDYWxjdWxhdGluZyB0aGUgcHJvcG9ydGlvbiBvZiBmZW1hbGUgbGF1cmVhdGVzIHBlciBkZWNhZGVcbnByb3BfZmVtYWxlX3dpbm5lcnMgPC0gbm9iZWwgJT4lXG4gICAgbXV0YXRlKFxuICAgICAgICBmZW1hbGVfd2lubmVyID0gc2V4ID09IFwiRmVtYWxlXCIsXG4gICAgICAgIGRlY2FkZSA9IGZsb29yKHllYXIgLyAxMCkgKiAxMFxuICAgICkgJT4lXG4gICAgZ3JvdXBfYnkoZGVjYWRlLCBjYXRlZ29yeSkgJT4lXG4gICAgc3VtbWFyaXplKHByb3BvcnRpb24gPSBtZWFuKGZlbWFsZV93aW5uZXIsIG5hLnJtID0gVFJVRSkpXG5cbiMgUGxvdHRpbmcgdGhlIHByb3BvcnRpb24gb2YgZmVtYWxlIGxhdXJlYXRlcyBwZXIgZGVjYWRlXG5nZ3Bsb3QocHJvcF9mZW1hbGVfd2lubmVycywgYWVzKHggPSBkZWNhZGUsIHkgPSBwcm9wb3J0aW9uLCBjb2xvciA9IGNhdGVnb3J5KSkgK1xuICAgIGdlb21fbGluZSgpICtcbiAgICBnZW9tX3BvaW50KCkgK1xuICAgIHNjYWxlX3lfY29udGludW91cyhsYWJlbHMgPSBzY2FsZXM6OnBlcmNlbnQsIGxpbWl0cyA9IDA6MSwgZXhwYW5kID0gYygwLCAwKSlcbmBgYCJ9 -->
 <pre class="r"><code># Calculating the proportion of female laureates per decade
-nobel['female_winner'] = ...
-prop_female_winners = ...
+prop_female_winners &lt;- nobel %&gt;%
+    mutate(
+        female_winner = sex == &quot;Female&quot;,
+        decade = floor(year / 10) * 10
+    ) %&gt;%
+    group_by(decade, category) %&gt;%
+    summarize(proportion = mean(female_winner, na.rm = TRUE))
 
-# Plotting USA born winners with % winners on the y-axis
-# ... YOUR CODE FOR TASK 5 ...</code></pre>
+# Plotting the proportion of female laureates per decade
+ggplot(prop_female_winners, aes(x = decade, y = proportion, color = category)) +
+    geom_line() +
+    geom_point() +
+    scale_y_continuous(labels = scales::percent, limits = 0:1, expand = c(0, 0))</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1845,9 +1899,11 @@ prop_female_winners = ...
 <p>Given this imbalance, who was the first woman to receive a Nobel Prize? And in what category?</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBQaWNraW5nIG91dCB0aGUgZmlyc3Qgd29tYW4gdG8gd2luIGEgTm9iZWwgUHJpemVcbiMgLi4uIFlPVVIgQ09ERSBGT1IgVEFTSyA1IC4uLlxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBQaWNraW5nIG91dCB0aGUgZmlyc3Qgd29tYW4gdG8gd2luIGEgTm9iZWwgUHJpemVcbm5vYmVsICU+JVxuICAgIGZpbHRlcihzZXggPT0gXCJGZW1hbGVcIikgJT4lXG4gICAgdG9wX24oMSwgZGVzYyh5ZWFyKSlcbmBgYCJ9 -->
 <pre class="r"><code># Picking out the first woman to win a Nobel Prize
-# ... YOUR CODE FOR TASK 5 ...</code></pre>
+nobel %&gt;%
+    filter(sex == &quot;Female&quot;) %&gt;%
+    top_n(1, desc(year))</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1856,9 +1912,11 @@ prop_female_winners = ...
 </ol>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBTZWxlY3RpbmcgdGhlIGxhdXJlYXRlcyB0aGF0IGhhdmUgcmVjZWl2ZWQgMiBvciBtb3JlIHByaXplcy5cbiMgLi4uIFlPVVIgQ09ERSBGT1IgVEFTSyA1IC4uLlxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBTZWxlY3RpbmcgdGhlIGxhdXJlYXRlcyB0aGF0IGhhdmUgcmVjZWl2ZWQgMiBvciBtb3JlIHByaXplcy5cbm5vYmVsICU+JVxuICAgIGNvdW50KGZ1bGxfbmFtZSkgJT4lXG4gICAgZmlsdGVyKG4gPiAxKVxuYGBgIn0= -->
 <pre class="r"><code># Selecting the laureates that have received 2 or more prizes.
-# ... YOUR CODE FOR TASK 5 ...</code></pre>
+nobel %&gt;%
+    count(full_name) %&gt;%
+    filter(n &gt; 1)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1868,15 +1926,18 @@ prop_female_winners = ...
 <p>But how old are you generally when you get the prize?</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDb252ZXJ0aW5nIGJpcnRoX2RhdGUgZnJvbSBTdHJpbmcgdG8gZGF0ZXRpbWVcbm5vYmVsWydiaXJ0aF9kYXRlJ10gPSAuLi5cblxuIyBDYWxjdWxhdGluZyB0aGUgYWdlIG9mIE5vYmVsIFByaXplIHdpbm5lcnNcbm5vYmVsWydhZ2UnXSA9IC4uLlxuXG4jIFBsb3R0aW5nIHRoZSBhZ2Ugb2YgTm9iZWwgUHJpemUgd2lubmVyc1xuIyAuLi4gWU9VUiBDT0RFIEZPUiBUQVNLIDggLi4uXG5gYGAifQ== -->
-<pre class="r"><code># Converting birth_date from String to datetime
-nobel['birth_date'] = ...
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBMb2FkaW5nIHRoZSBsdWJyaWRhdGUgcGFja2FnZVxubGlicmFyeShsdWJyaWRhdGUpXG5cbiMgQ2FsY3VsYXRpbmcgdGhlIGFnZSBvZiBOb2JlbCBQcml6ZSB3aW5uZXJzXG5ub2JlbF9hZ2UgPC0gbm9iZWwgJT4lXG4gICAgbXV0YXRlKGFnZSA9IHllYXIgLSB5ZWFyKGJpcnRoX2RhdGUpKVxuXG4jIFBsb3R0aW5nIHRoZSBhZ2Ugb2YgTm9iZWwgUHJpemUgd2lubmVyc1xuZ2dwbG90KG5vYmVsX2FnZSwgYWVzKHggPSBhZ2UsIHkgPSB5ZWFyKSkgK1xuICAgIGdlb21fcG9pbnQoKSArXG4gICAgZ2VvbV9zbW9vdGgoKVxuYGBgIn0= -->
+<pre class="r"><code># Loading the lubridate package
+library(lubridate)
 
 # Calculating the age of Nobel Prize winners
-nobel['age'] = ...
+nobel_age &lt;- nobel %&gt;%
+    mutate(age = year - year(birth_date))
 
 # Plotting the age of Nobel Prize winners
-# ... YOUR CODE FOR TASK 8 ...</code></pre>
+ggplot(nobel_age, aes(x = age, y = year)) +
+    geom_point() +
+    geom_smooth()</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1887,9 +1948,12 @@ nobel['age'] = ...
 <p>Let’s look at age trends within different prize categories.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBTYW1lIHBsb3QgYXMgYWJvdmUsIGJ1dCBzZXBhcmF0ZSBwbG90cyBmb3IgZWFjaCB0eXBlIG9mIE5vYmVsIFByaXplXG4jIC4uLiBZT1VSIENPREUgRk9SIFRBU0sgOSAuLi5cbmBgYCJ9 -->
-<pre class="r"><code># Same plot as above, but separate plots for each type of Nobel Prize
-# ... YOUR CODE FOR TASK 9 ...</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBTYW1lIHBsb3QgYXMgYWJvdmUsIGJ1dCBmYWNldGVkIGJ5IHRoZSBjYXRlZ29yeSBvZiB0aGUgTm9iZWwgUHJpemVcbmdncGxvdChub2JlbF9hZ2UsIGFlcyh4ID0gYWdlLCB5ID0geWVhcikpICtcbiAgICBnZW9tX3BvaW50KCkgK1xuICAgIGdlb21fc21vb3RoKHNlID0gRkFMU0UpICtcbiAgICBmYWNldF93cmFwKH4gY2F0ZWdvcnkpXG5gYGAifQ== -->
+<pre class="r"><code># Same plot as above, but faceted by the category of the Nobel Prize
+ggplot(nobel_age, aes(x = age, y = year)) +
+    geom_point() +
+    geom_smooth(se = FALSE) +
+    facet_wrap(~ category)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1899,12 +1963,12 @@ nobel['age'] = ...
 <p>In the peace category we also a winner around 2010 that seems exceptionally young. This begs the questions, who are the oldest and youngest people ever to have won a Nobel Prize?</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBUaGUgb2xkZXN0IHdpbm5lciBvZiBhIE5vYmVsIFByaXplIGFzIG9mIDIwMTZcbiMgLi4uIFlPVVIgQ09ERSBGT1IgVEFTSyAxMCAuLi5cblxuIyBUaGUgeW91bmdlc3Qgd2lubmVyIG9mIGEgTm9iZWwgUHJpemUgYXMgb2YgMjAxNlxuIyAuLi4gWU9VUiBDT0RFIEZPUiBUQVNLIDEwIC4uLlxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBUaGUgb2xkZXN0IHdpbm5lciBvZiBhIE5vYmVsIFByaXplIGFzIG9mIDIwMTZcbm5vYmVsX2FnZSAlPiUgdG9wX24oMSwgYWdlKVxuXG4jIFRoZSB5b3VuZ2VzdCB3aW5uZXIgb2YgYSBOb2JlbCBQcml6ZSBhcyBvZiAyMDE2XG5ub2JlbF9hZ2UgJT4lIHRvcF9uKDEsIGRlc2MoYWdlKSlcbmBgYCJ9 -->
 <pre class="r"><code># The oldest winner of a Nobel Prize as of 2016
-# ... YOUR CODE FOR TASK 10 ...
+nobel_age %&gt;% top_n(1, age)
 
 # The youngest winner of a Nobel Prize as of 2016
-# ... YOUR CODE FOR TASK 10 ...</code></pre>
+nobel_age %&gt;% top_n(1, desc(age))</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1915,15 +1979,15 @@ nobel['age'] = ...
 <p>Before you leave, what was again the name of the youngest winner ever who in 2014 got the prize for “[her] struggle against the suppression of children and young people and for the right of all children to education”?</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBUaGUgbmFtZSBvZiB0aGUgeW91bmdlc3Qgd2lubmVyIG9mIHRoZSBOb2JlbCBQcml6ZSBhcyBvZiAyMDE2XG55b3VuZ2VzdF93aW5uZXIgPSAnLi4uJ1xuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBUaGUgbmFtZSBvZiB0aGUgeW91bmdlc3Qgd2lubmVyIG9mIHRoZSBOb2JlbCBQcml6ZSBhcyBvZiAyMDE2XG55b3VuZ2VzdF93aW5uZXIgPSAnTWFsYWxhIFlvdXNhZnphaSdcbmBgYCJ9 -->
 <pre class="r"><code># The name of the youngest winner of the Nobel Prize as of 2016
-youngest_winner = '...'</code></pre>
+youngest_winner = 'Malala Yousafzai'</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKMS4gVGhlIG1vc3QgTm9iZWwgb2YgUHJpemVzCgpUaGUgTm9iZWwgUHJpemUgaXMgcGVyaGFwcyB0aGUgd29ybGQncyBtb3N0IHdlbGwga25vd24gc2NpZW50aWZpYyBhd2FyZC4gRXhjZXB0IGZvciB0aGUgaG9ub3IsIHByZXN0aWdlIGFuZCBzdWJzdGFudGlhbCBwcml6ZSBtb25leSB0aGUgcmVjaXBpZW50IGFsc28gZ2V0cyBhIGdvbGQgbWVkYWwgc2hvd2luZyBBbGZyZWQgTm9iZWwgKDE4MzMgLSAxODk2KSB3aG8gZXN0YWJsaXNoZWQgdGhlIHByaXplLiBFdmVyeSB5ZWFyIGl0J3MgZ2l2ZW4gdG8gc2NpZW50aXN0cyBhbmQgc2Nob2xhcnMgaW4gdGhlIGNhdGVnb3JpZXMgY2hlbWlzdHJ5LCBsaXRlcmF0dXJlLCBwaHlzaWNzLCBwaHlzaW9sb2d5IG9yIG1lZGljaW5lLCBlY29ub21pY3MsIGFuZCBwZWFjZS4gVGhlIGZpcnN0IE5vYmVsIFByaXplIHdhcyBoYW5kZWQgb3V0IGluIDE5MDEsIGFuZCBhdCB0aGF0IHRpbWUgdGhlIFByaXplIHdhcyB2ZXJ5IEV1cm9jZW50cmljIGFuZCBtYWxlLWZvY3VzZWQsIGJ1dCBub3dhZGF5cyBpdCdzIG5vdCBiaWFzZWQgaW4gYW55IHdheSB3aGF0c29ldmVyLiBTdXJlbHkuIFJpZ2h0PwoKV2VsbCwgd2UncmUgZ29pbmcgdG8gZmluZCBvdXQhIFRoZSBOb2JlbCBGb3VuZGF0aW9uIGhhcyBtYWRlIGEgZGF0YXNldCBhdmFpbGFibGUgb2YgYWxsIHByaXplIHdpbm5lcnMgZnJvbSB0aGUgc3RhcnQgb2YgdGhlIHByaXplLCBpbiAxOTAxLCB0byAyMDE2LiBMZXQncyBsb2FkIGl0IGluIGFuZCB0YWtlIGEgbG9vay4KCmBgYHtyfQojIExvYWRpbmcgaW4gcmVxdWlyZWQgbGlicmFyaWVzCiMgLi4uIFlPVVIgQ09ERSBGT1IgVEFTSyAxIC4uLgoKIyBSZWFkaW5nIGluIHRoZSBOb2JlbCBQcml6ZSBkYXRhCm5vYmVsID0gLi4uCgojIFRha2luZyBhIGxvb2sgYXQgdGhlIGZpcnN0IHNldmVyYWwgd2lubmVycwojIC4uLiBZT1VSIENPREUgRk9SIFRBU0sgMSAuLi4KYGBgCgoyLiBTbywgd2hvIGdldHMgdGhlIE5vYmVsIFByaXplPwpKdXN0IGxvb2tpbmcgYXQgdGhlIGZpcnN0IGNvdXBsZSBvZiBwcml6ZSB3aW5uZXJzLCBvciBOb2JlbCBsYXVyZWF0ZXMgYXMgdGhleSBhcmUgYWxzbyBjYWxsZWQsIHdlIGFscmVhZHkgc2VlIGEgY2VsZWJyaXR5OiBXaWxoZWxtIENvbnJhZCBSw7ZudGdlbiwgdGhlIGd1eSB3aG8gZGlzY292ZXJlZCBYLXJheXMuIEFuZCBhY3R1YWxseSwgd2Ugc2VlIHRoYXQgYWxsIG9mIHRoZSB3aW5uZXJzIGluIDE5MDEgd2VyZSBndXlzIHRoYXQgY2FtZSBmcm9tIEV1cm9wZS4gQnV0IHRoYXQgd2FzIGJhY2sgaW4gMTkwMSwgbG9va2luZyBhdCBhbGwgd2lubmVycyBpbiB0aGUgZGF0YXNldCwgZnJvbSAxOTAxIHRvIDIwMTYsIHdoaWNoIHNleCBhbmQgd2hpY2ggY291bnRyeSBpcyB0aGUgbW9zdCBjb21tb25seSByZXByZXNlbnRlZD8KCihGb3IgY291bnRyeSwgd2Ugd2lsbCB1c2UgdGhlIGJpcnRoX2NvdW50cnkgb2YgdGhlIHdpbm5lciwgYXMgdGhlIG9yZ2FuaXphdGlvbl9jb3VudHJ5IGlzIE5hTiBmb3IgYWxsIHNoYXJlZCBOb2JlbCBQcml6ZXMuKQoKYGBge3J9CiMgRGlzcGxheSB0aGUgbnVtYmVyIG9mIChwb3NzaWJseSBzaGFyZWQpIE5vYmVsIFByaXplcyBoYW5kZWQKIyBvdXQgYmV0d2VlbiAxOTAxIGFuZCAyMDE2CiMgLi4uIFlPVVIgQ09ERSBGT1IgVEFTSyAyIC4uLgoKIyBEaXNwbGF5IHRoZSBudW1iZXIgb2YgcHJpemVzIHdvbiBieSBtYWxlIGFuZCBmZW1hbGUgcmVjaXBpZW50cy4KIyAuLi4gWU9VUiBDT0RFIEZPUiBUQVNLIDIgLi4uCgojIERpc3BsYXkgdGhlIG51bWJlciBvZiBwcml6ZXMgd29uIGJ5IHRoZSB0b3AgMTAgbmF0aW9uYWxpdGllcy4KIyAuLi4gWU9VUiBDT0RFIEZPUiBUQVNLIDIgLi4uCmBgYAoKMy4gVVNBIGRvbWluYW5jZQpOb3Qgc28gc3VycHJpc2luZyBwZXJoYXBzOiB0aGUgbW9zdCBjb21tb24gTm9iZWwgbGF1cmVhdGUgYmV0d2VlbiAxOTAxIGFuZCAyMDE2IHdhcyBhIG1hbiBib3JuIGluIHRoZSBVbml0ZWQgU3RhdGVzIG9mIEFtZXJpY2EuIEJ1dCBpbiAxOTAxIGFsbCB0aGUgd2lubmVycyB3ZXJlIEV1cm9wZWFuLiBXaGVuIGRpZCB0aGUgVVNBIHN0YXJ0IHRvIGRvbWluYXRlIHRoZSBOb2JlbCBQcml6ZSBjaGFydHM/CgpgYGB7cn0KIyBDYWxjdWxhdGluZyB0aGUgcHJvcG9ydGlvbiBvZiBVU0EgYm9ybiB3aW5uZXJzIHBlciBkZWNhZGUKbm9iZWxbJ3VzYV9ib3JuX3dpbm5lciddID0gLi4uCm5vYmVsWydkZWNhZGUnXSA9IC4uLgpwcm9wX3VzYV93aW5uZXJzID0gLi4uCgojIERpc3BsYXkgdGhlIHByb3BvcnRpb25zIG9mIFVTQSBib3JuIHdpbm5lcnMgcGVyIGRlY2FkZQojIC4uLiBZT1VSIENPREUgRk9SIFRBU0sgMyAuLi4KYGBgCgo0LiBVU0EgZG9taW5hbmNlLCB2aXN1YWxpemVkCkEgdGFibGUgaXMgT0ssIGJ1dCB0byBzZWUgd2hlbiB0aGUgVVNBIHN0YXJ0ZWQgdG8gZG9taW5hdGUgdGhlIE5vYmVsIGNoYXJ0cyB3ZSBuZWVkIGEgcGxvdCEKCmBgYHtyfQojIFNldHRpbmcgdGhlIHBsb3R0aW5nIHRoZW1lCnNucy5zZXQoKQojIGFuZCBzZXR0aW5nIHRoZSBzaXplIG9mIGFsbCBwbG90cy4KaW1wb3J0IG1hdHBsb3RsaWIucHlwbG90IGFzIHBsdApwbHQucmNQYXJhbXNbJ2ZpZ3VyZS5maWdzaXplJ10gPSBbMTEsIDddCgojIFBsb3R0aW5nIFVTQSBib3JuIHdpbm5lcnMgCmF4ID0gLi4uCgojIEFkZGluZyAlLWZvcm1hdHRpbmcgdG8gdGhlIHktYXhpcwpmcm9tIG1hdHBsb3RsaWIudGlja2VyIGltcG9ydCBQZXJjZW50Rm9ybWF0dGVyCiMgLi4uIFlPVVIgQ09ERSBGT1IgVEFTSyA0IC4uLgpgYGAKCjUuIFdoYXQgaXMgdGhlIGdlbmRlciBvZiBhIHR5cGljYWwgTm9iZWwgUHJpemUgd2lubmVyPwpTbyB0aGUgVVNBIGJlY2FtZSB0aGUgZG9taW5hdGluZyB3aW5uZXIgb2YgdGhlIE5vYmVsIFByaXplIGZpcnN0IGluIHRoZSAxOTMwcyBhbmQgaGFkIGtlcHQgdGhlIGxlYWRpbmcgcG9zaXRpb24gZXZlciBzaW5jZS4gQnV0IG9uZSBncm91cCB0aGF0IHdhcyBpbiB0aGUgbGVhZCBmcm9tIHRoZSBzdGFydCwgYW5kIG5ldmVyIHNlZW1zIHRvIGxldCBnbywgYXJlIG1lbi4gTWF5YmUgaXQgc2hvdWxkbid0IGNvbWUgYXMgYSBzaG9jayB0aGF0IHRoZXJlIGlzIHNvbWUgaW1iYWxhbmNlIGJldHdlZW4gaG93IG1hbnkgbWFsZSBhbmQgZmVtYWxlIHByaXplIHdpbm5lcnMgdGhlcmUgYXJlLCBidXQgaG93IHNpZ25pZmljYW50IGlzIHRoaXMgaW1iYWxhbmNlPyBBbmQgaXMgaXQgYmV0dGVyIG9yIHdvcnNlIHdpdGhpbiBzcGVjaWZpYyBwcml6ZSBjYXRlZ29yaWVzIGxpa2UgcGh5c2ljcywgbWVkaWNpbmUsIGxpdGVyYXR1cmUsIGV0Yy4/CgpgYGB7cn0KIyBDYWxjdWxhdGluZyB0aGUgcHJvcG9ydGlvbiBvZiBmZW1hbGUgbGF1cmVhdGVzIHBlciBkZWNhZGUKbm9iZWxbJ2ZlbWFsZV93aW5uZXInXSA9IC4uLgpwcm9wX2ZlbWFsZV93aW5uZXJzID0gLi4uCgojIFBsb3R0aW5nIFVTQSBib3JuIHdpbm5lcnMgd2l0aCAlIHdpbm5lcnMgb24gdGhlIHktYXhpcwojIC4uLiBZT1VSIENPREUgRk9SIFRBU0sgNSAuLi4KYGBgCgo2LiBUaGUgZmlyc3Qgd29tYW4gdG8gd2luIHRoZSBOb2JlbCBQcml6ZQpUaGUgcGxvdCBhYm92ZSBpcyBhIGJpdCBtZXNzeSBhcyB0aGUgbGluZXMgYXJlIG92ZXJwbG90dGluZy4gQnV0IGl0IGRvZXMgc2hvdyBzb21lIGludGVyZXN0aW5nIHRyZW5kcyBhbmQgcGF0dGVybnMuIE92ZXJhbGwgdGhlIGltYmFsYW5jZSBpcyBwcmV0dHkgbGFyZ2Ugd2l0aCBwaHlzaWNzLCBlY29ub21pY3MsIGFuZCBjaGVtaXN0cnkgaGF2aW5nIHRoZSBsYXJnZXN0IGltYmFsYW5jZS4gTWVkaWNpbmUgaGFzIGEgc29tZXdoYXQgcG9zaXRpdmUgdHJlbmQsIGFuZCBzaW5jZSB0aGUgMTk5MHMgdGhlIGxpdGVyYXR1cmUgcHJpemUgaXMgYWxzbyBub3cgbW9yZSBiYWxhbmNlZC4gVGhlIGJpZyBvdXRsaWVyIGlzIHRoZSBwZWFjZSBwcml6ZSBkdXJpbmcgdGhlIDIwMTBzLCBidXQga2VlcCBpbiBtaW5kIHRoYXQgdGhpcyBqdXN0IGNvdmVycyB0aGUgeWVhcnMgMjAxMCB0byAyMDE2LgoKR2l2ZW4gdGhpcyBpbWJhbGFuY2UsIHdobyB3YXMgdGhlIGZpcnN0IHdvbWFuIHRvIHJlY2VpdmUgYSBOb2JlbCBQcml6ZT8gQW5kIGluIHdoYXQgY2F0ZWdvcnk/CgpgYGB7cn0KIyBQaWNraW5nIG91dCB0aGUgZmlyc3Qgd29tYW4gdG8gd2luIGEgTm9iZWwgUHJpemUKIyAuLi4gWU9VUiBDT0RFIEZPUiBUQVNLIDUgLi4uCmBgYAoKNy4gUmVwZWF0IGxhdXJlYXRlcwpGb3IgbW9zdCBzY2llbnRpc3RzL3dyaXRlcnMvYWN0aXZpc3RzIGEgTm9iZWwgUHJpemUgd291bGQgYmUgdGhlIGNyb3duaW5nIGFjaGlldmVtZW50IG9mIGEgbG9uZyBjYXJlZXIuIEJ1dCBmb3Igc29tZSBwZW9wbGUsIG9uZSBpcyBqdXN0IG5vdCBlbm91Z2gsIGFuZCBmZXcgaGF2ZSBnb3R0ZW4gaXQgbW9yZSB0aGFuIG9uY2UuIFdobyBhcmUgdGhlc2UgbHVja3kgZmV3PyAoSGF2aW5nIHdvbiBubyBOb2JlbCBQcml6ZSBteXNlbGYsIEknbGwgYXNzdW1lIGl0J3MganVzdCBhYm91dCBsdWNrLikKCmBgYHtyfQojIFNlbGVjdGluZyB0aGUgbGF1cmVhdGVzIHRoYXQgaGF2ZSByZWNlaXZlZCAyIG9yIG1vcmUgcHJpemVzLgojIC4uLiBZT1VSIENPREUgRk9SIFRBU0sgNSAuLi4KYGBgCgo4LiBIb3cgb2xkIGFyZSB5b3Ugd2hlbiB5b3UgZ2V0IHRoZSBwcml6ZT8KVGhlIGxpc3Qgb2YgcmVwZWF0IHdpbm5lcnMgY29udGFpbnMgc29tZSBpbGx1c3RyaW91cyBuYW1lcyEgV2UgYWdhaW4gbWVldCBNYXJpZSBDdXJpZSwgd2hvIGdvdCB0aGUgcHJpemUgaW4gcGh5c2ljcyBmb3IgZGlzY292ZXJpbmcgcmFkaWF0aW9uIGFuZCBpbiBjaGVtaXN0cnkgZm9yIGlzb2xhdGluZyByYWRpdW0gYW5kIHBvbG9uaXVtLiBKb2huIEJhcmRlZW4gZ290IGl0IHR3aWNlIGluIHBoeXNpY3MgZm9yIHRyYW5zaXN0b3JzIGFuZCBzdXBlcmNvbmR1Y3Rpdml0eSwgRnJlZGVyaWNrIFNhbmdlciBnb3QgaXQgdHdpY2UgaW4gY2hlbWlzdHJ5LCBhbmQgTGludXMgQ2FybCBQYXVsaW5nIGdvdCBpdCBmaXJzdCBpbiBjaGVtaXN0cnkgYW5kIGxhdGVyIGluIHBlYWNlIGZvciBoaXMgd29yayBpbiBwcm9tb3RpbmcgbnVjbGVhciBkaXNhcm1hbWVudC4gV2UgYWxzbyBsZWFybiB0aGF0IG9yZ2FuaXphdGlvbnMgYWxzbyBnZXQgdGhlIHByaXplIGFzIGJvdGggdGhlIFJlZCBDcm9zcyBhbmQgdGhlIFVOSENSIGhhdmUgZ290dGVuIGl0IHR3aWNlLgoKQnV0IGhvdyBvbGQgYXJlIHlvdSBnZW5lcmFsbHkgd2hlbiB5b3UgZ2V0IHRoZSBwcml6ZT8KCmBgYHtyfQojIENvbnZlcnRpbmcgYmlydGhfZGF0ZSBmcm9tIFN0cmluZyB0byBkYXRldGltZQpub2JlbFsnYmlydGhfZGF0ZSddID0gLi4uCgojIENhbGN1bGF0aW5nIHRoZSBhZ2Ugb2YgTm9iZWwgUHJpemUgd2lubmVycwpub2JlbFsnYWdlJ10gPSAuLi4KCiMgUGxvdHRpbmcgdGhlIGFnZSBvZiBOb2JlbCBQcml6ZSB3aW5uZXJzCiMgLi4uIFlPVVIgQ09ERSBGT1IgVEFTSyA4IC4uLgpgYGAKCjkuIEFnZSBkaWZmZXJlbmNlcyBiZXR3ZWVuIHByaXplIGNhdGVnb3JpZXMKVGhlIHBsb3QgYWJvdmUgc2hvd3MgdXMgYSBsb3QhIFdlIHNlZSB0aGF0IHBlb3BsZSB1c2UgdG8gYmUgYXJvdW5kIDU1IHdoZW4gdGhleSByZWNlaXZlZCB0aGUgcHJpY2UsIGJ1dCBub3dhZGF5cyB0aGUgYXZlcmFnZSBpcyBjbG9zZXIgdG8gNjUuIEJ1dCB0aGVyZSBpcyBhIGxhcmdlIHNwcmVhZCBpbiB0aGUgbGF1cmVhdGVzJyBhZ2VzLCBhbmQgd2hpbGUgbW9zdCBhcmUgNTArLCBzb21lIGFyZSB2ZXJ5IHlvdW5nLgoKV2UgYWxzbyBzZWUgdGhhdCB0aGUgZGVuc2l0eSBvZiBwb2ludHMgaXMgbXVjaCBoaWdoIG5vd2FkYXlzIHRoYW4gaW4gdGhlIGVhcmx5IDE5MDBzIC0tIG5vd2FkYXlzIG1hbnkgbW9yZSBvZiB0aGUgcHJpemVzIGFyZSBzaGFyZWQsIGFuZCBzbyB0aGVyZSBhcmUgbWFueSBtb3JlIHdpbm5lcnMuIFdlIGFsc28gc2VlIHRoYXQgdGhlcmUgd2FzIGEgZGlzcnVwdGlvbiBpbiBhd2FyZGVkIHByaXplcyBhcm91bmQgdGhlIFNlY29uZCBXb3JsZCBXYXIgKDE5MzkgLSAxOTQ1KS4KCkxldCdzIGxvb2sgYXQgYWdlIHRyZW5kcyB3aXRoaW4gZGlmZmVyZW50IHByaXplIGNhdGVnb3JpZXMuCgpgYGB7cn0KIyBTYW1lIHBsb3QgYXMgYWJvdmUsIGJ1dCBzZXBhcmF0ZSBwbG90cyBmb3IgZWFjaCB0eXBlIG9mIE5vYmVsIFByaXplCiMgLi4uIFlPVVIgQ09ERSBGT1IgVEFTSyA5IC4uLgpgYGAKCjEwLiBPbGRlc3QgYW5kIHlvdW5nZXN0IHdpbm5lcnMKTW9yZSBwbG90cyB3aXRoIGxvdHMgb2YgZXhjaXRpbmcgc3R1ZmYgZ29pbmcgb24hIFdlIHNlZSB0aGF0IGJvdGggd2lubmVycyBvZiB0aGUgY2hlbWlzdHJ5LCBtZWRpY2luZSwgYW5kIHBoeXNpY3MgcHJpemUgaGF2ZSBnb3R0ZW4gb2xkZXIgb3ZlciB0aW1lLiBUaGUgdHJlbmQgaXMgc3Ryb25nZXN0IGZvciBwaHlzaWNzOiB0aGUgYXZlcmFnZSBhZ2UgdXNlZCB0byBiZSBiZWxvdyA1MCwgYW5kIG5vdyBpdCdzIGFsbW9zdCA3MC4gTGl0ZXJhdHVyZSBhbmQgZWNvbm9taWNzIGFyZSBtb3JlIHN0YWJsZS4gV2UgYWxzbyBzZWUgdGhhdCBlY29ub21pY3MgaXMgYSBuZXdlciBjYXRlZ29yeS4gQnV0IHBlYWNlIHNob3dzIGFuIG9wcG9zaXRlIHRyZW5kIHdoZXJlIHdpbm5lcnMgYXJlIGdldHRpbmcgeW91bmdlciEKCkluIHRoZSBwZWFjZSBjYXRlZ29yeSB3ZSBhbHNvIGEgd2lubmVyIGFyb3VuZCAyMDEwIHRoYXQgc2VlbXMgZXhjZXB0aW9uYWxseSB5b3VuZy4gVGhpcyBiZWdzIHRoZSBxdWVzdGlvbnMsIHdobyBhcmUgdGhlIG9sZGVzdCBhbmQgeW91bmdlc3QgcGVvcGxlIGV2ZXIgdG8gaGF2ZSB3b24gYSBOb2JlbCBQcml6ZT8KCmBgYHtyfQojIFRoZSBvbGRlc3Qgd2lubmVyIG9mIGEgTm9iZWwgUHJpemUgYXMgb2YgMjAxNgojIC4uLiBZT1VSIENPREUgRk9SIFRBU0sgMTAgLi4uCgojIFRoZSB5b3VuZ2VzdCB3aW5uZXIgb2YgYSBOb2JlbCBQcml6ZSBhcyBvZiAyMDE2CiMgLi4uIFlPVVIgQ09ERSBGT1IgVEFTSyAxMCAuLi4KYGBgCgoxMS4gWW91IGdldCBhIHByaXplIQoKCkhleSEgWW91IGdldCBhIHByaXplIGZvciBtYWtpbmcgaXQgdG8gdGhlIHZlcnkgZW5kIG9mIHRoaXMgbm90ZWJvb2shIEl0IG1pZ2h0IG5vdCBiZSBhIE5vYmVsIFByaXplLCBidXQgSSBtYWRlIGl0IG15c2VsZiBpbiBwYWludCBzbyBpdCBzaG91bGQgY291bnQgZm9yIHNvbWV0aGluZy4gQnV0IGRvbid0IGRlc3BhaXIsIExlb25pZCBIdXJ3aWN6IHdhcyA5MCB5ZWFycyBvbGQgd2hlbiBoZSBnb3QgaGlzIHByaXplLCBzbyBpdCBtaWdodCBub3QgYmUgdG9vIGxhdGUgZm9yIHlvdS4gV2hvIGtub3dzLgoKQmVmb3JlIHlvdSBsZWF2ZSwgd2hhdCB3YXMgYWdhaW4gdGhlIG5hbWUgb2YgdGhlIHlvdW5nZXN0IHdpbm5lciBldmVyIHdobyBpbiAyMDE0IGdvdCB0aGUgcHJpemUgZm9yICJbaGVyXSBzdHJ1Z2dsZSBhZ2FpbnN0IHRoZSBzdXBwcmVzc2lvbiBvZiBjaGlsZHJlbiBhbmQgeW91bmcgcGVvcGxlIGFuZCBmb3IgdGhlIHJpZ2h0IG9mIGFsbCBjaGlsZHJlbiB0byBlZHVjYXRpb24iPwoKYGBge3J9CiMgVGhlIG5hbWUgb2YgdGhlIHlvdW5nZXN0IHdpbm5lciBvZiB0aGUgTm9iZWwgUHJpemUgYXMgb2YgMjAxNgp5b3VuZ2VzdF93aW5uZXIgPSAnLi4uJwpgYGAKCgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKMS4gVGhlIG1vc3QgTm9iZWwgb2YgUHJpemVzCgpUaGUgTm9iZWwgUHJpemUgaXMgcGVyaGFwcyB0aGUgd29ybGQncyBtb3N0IHdlbGwga25vd24gc2NpZW50aWZpYyBhd2FyZC4gRXhjZXB0IGZvciB0aGUgaG9ub3IsIHByZXN0aWdlIGFuZCBzdWJzdGFudGlhbCBwcml6ZSBtb25leSB0aGUgcmVjaXBpZW50IGFsc28gZ2V0cyBhIGdvbGQgbWVkYWwgc2hvd2luZyBBbGZyZWQgTm9iZWwgKDE4MzMgLSAxODk2KSB3aG8gZXN0YWJsaXNoZWQgdGhlIHByaXplLiBFdmVyeSB5ZWFyIGl0J3MgZ2l2ZW4gdG8gc2NpZW50aXN0cyBhbmQgc2Nob2xhcnMgaW4gdGhlIGNhdGVnb3JpZXMgY2hlbWlzdHJ5LCBsaXRlcmF0dXJlLCBwaHlzaWNzLCBwaHlzaW9sb2d5IG9yIG1lZGljaW5lLCBlY29ub21pY3MsIGFuZCBwZWFjZS4gVGhlIGZpcnN0IE5vYmVsIFByaXplIHdhcyBoYW5kZWQgb3V0IGluIDE5MDEsIGFuZCBhdCB0aGF0IHRpbWUgdGhlIFByaXplIHdhcyB2ZXJ5IEV1cm9jZW50cmljIGFuZCBtYWxlLWZvY3VzZWQsIGJ1dCBub3dhZGF5cyBpdCdzIG5vdCBiaWFzZWQgaW4gYW55IHdheSB3aGF0c29ldmVyLiBTdXJlbHkuIFJpZ2h0PwoKV2VsbCwgd2UncmUgZ29pbmcgdG8gZmluZCBvdXQhIFRoZSBOb2JlbCBGb3VuZGF0aW9uIGhhcyBtYWRlIGEgZGF0YXNldCBhdmFpbGFibGUgb2YgYWxsIHByaXplIHdpbm5lcnMgZnJvbSB0aGUgc3RhcnQgb2YgdGhlIHByaXplLCBpbiAxOTAxLCB0byAyMDE2LiBMZXQncyBsb2FkIGl0IGluIGFuZCB0YWtlIGEgbG9vay4KCmBgYHtyfQojIExvYWRpbmcgaW4gcmVxdWlyZWQgbGlicmFyaWVzCmxpYnJhcnkodGlkeXZlcnNlKQoKIyBSZWFkaW5nIGluIHRoZSBOb2JlbCBQcml6ZSBkYXRhCm5vYmVsIDwtIHJlYWRfY3N2KCJub2JlbC5jc3YiKQoKIyBUYWtpbmcgYSBsb29rIGF0IHRoZSBmaXJzdCBjb3VwbGUgb2Ygd2lubmVycwpoZWFkKG5vYmVsKQpgYGAKCjIuIFNvLCB3aG8gZ2V0cyB0aGUgTm9iZWwgUHJpemU/Ckp1c3QgbG9va2luZyBhdCB0aGUgZmlyc3QgY291cGxlIG9mIHByaXplIHdpbm5lcnMsIG9yIE5vYmVsIGxhdXJlYXRlcyBhcyB0aGV5IGFyZSBhbHNvIGNhbGxlZCwgd2UgYWxyZWFkeSBzZWUgYSBjZWxlYnJpdHk6IFdpbGhlbG0gQ29ucmFkIFLDtm50Z2VuLCB0aGUgZ3V5IHdobyBkaXNjb3ZlcmVkIFgtcmF5cy4gQW5kIGFjdHVhbGx5LCB3ZSBzZWUgdGhhdCBhbGwgb2YgdGhlIHdpbm5lcnMgaW4gMTkwMSB3ZXJlIGd1eXMgdGhhdCBjYW1lIGZyb20gRXVyb3BlLiBCdXQgdGhhdCB3YXMgYmFjayBpbiAxOTAxLCBsb29raW5nIGF0IGFsbCB3aW5uZXJzIGluIHRoZSBkYXRhc2V0LCBmcm9tIDE5MDEgdG8gMjAxNiwgd2hpY2ggc2V4IGFuZCB3aGljaCBjb3VudHJ5IGlzIHRoZSBtb3N0IGNvbW1vbmx5IHJlcHJlc2VudGVkPwoKKEZvciBjb3VudHJ5LCB3ZSB3aWxsIHVzZSB0aGUgYmlydGhfY291bnRyeSBvZiB0aGUgd2lubmVyLCBhcyB0aGUgb3JnYW5pemF0aW9uX2NvdW50cnkgaXMgTmFOIGZvciBhbGwgc2hhcmVkIE5vYmVsIFByaXplcy4pCgpgYGB7cn0KIyBDb3VudGluZyB0aGUgbnVtYmVyIG9mIChwb3NzaWJseSBzaGFyZWQpIE5vYmVsIFByaXplcyBoYW5kZWQKIyBvdXQgYmV0d2VlbiAxOTAxIGFuZCAyMDE2Cm5vYmVsICU+JSBjb3VudCgpCgojIENvdW50aW5nIHRoZSBudW1iZXIgb2YgcHJpemVzIHdvbiBieSBtYWxlIGFuZCBmZW1hbGUgcmVjaXBpZW50cy4Kbm9iZWwgJT4lCiAgICBjb3VudChzZXgpCgojIENvdW50aW5nIHRoZSBudW1iZXIgb2YgcHJpemVzIHdvbiBieSBkaWZmZXJlbnQgbmF0aW9uYWxpdGllcy4Kbm9iZWwgJT4lCiAgICBjb3VudChiaXJ0aF9jb3VudHJ5KSAlPiUKICAgIGFycmFuZ2UoZGVzYyhuKSkgJT4lCiAgICBoZWFkKDIwKQpgYGAKCgozLiBVU0EgZG9taW5hbmNlCk5vdCBzbyBzdXJwcmlzaW5nIHBlcmhhcHM6IHRoZSBtb3N0IGNvbW1vbiBOb2JlbCBsYXVyZWF0ZSBiZXR3ZWVuIDE5MDEgYW5kIDIwMTYgd2FzIGEgbWFuIGJvcm4gaW4gdGhlIFVuaXRlZCBTdGF0ZXMgb2YgQW1lcmljYS4gQnV0IGluIDE5MDEgYWxsIHRoZSB3aW5uZXJzIHdlcmUgRXVyb3BlYW4uIFdoZW4gZGlkIHRoZSBVU0Egc3RhcnQgdG8gZG9taW5hdGUgdGhlIE5vYmVsIFByaXplIGNoYXJ0cz8KCmBgYHtyfQojIENhbGN1bGF0aW5nIHRoZSBwcm9wb3J0aW9uIG9mIFVTQSBib3JuIHdpbm5lcnMgcGVyIGRlY2FkZQpwcm9wX3VzYV93aW5uZXJzIDwtIG5vYmVsICU+JSAKICAgIG11dGF0ZSgKICAgICAgICAgIHVzYV9ib3JuX3dpbm5lciA9IGJpcnRoX2NvdW50cnkgPT0gIlVuaXRlZCBTdGF0ZXMgb2YgQW1lcmljYSIsCiAgICAgICAgICBkZWNhZGUgPSBmbG9vcih5ZWFyIC8gMTApICogMTAKICAgICkgJT4lCiAgICBncm91cF9ieShkZWNhZGUpICU+JQogICAgc3VtbWFyaXplKHByb3BvcnRpb24gPSBtZWFuKHVzYV9ib3JuX3dpbm5lciwgbmEucm0gPSBUUlVFKSkKCiMgRGlzcGxheSB0aGUgcHJvcG9ydGlvbnMgb2YgVVNBIGJvcm4gd2lubmVycyBwZXIgZGVjYWRlCnByb3BfdXNhX3dpbm5lcnMKYGBgCgo0LiBVU0EgZG9taW5hbmNlLCB2aXN1YWxpemVkCkEgdGFibGUgaXMgT0ssIGJ1dCB0byBzZWUgd2hlbiB0aGUgVVNBIHN0YXJ0ZWQgdG8gZG9taW5hdGUgdGhlIE5vYmVsIGNoYXJ0cyB3ZSBuZWVkIGEgcGxvdCEKCmBgYHtyfQojIFNldHRpbmcgdGhlIHNpemUgb2YgcGxvdHMgaW4gdGhpcyBub3RlYm9vawpvcHRpb25zKHJlcHIucGxvdC53aWR0aD03LCByZXByLnBsb3QuaGVpZ2h0PTQpCgojIFBsb3R0aW5nIFVTQSBib3JuIHdpbm5lcnMKZ2dwbG90KHByb3BfdXNhX3dpbm5lcnMsIGFlcyh4ID0gZGVjYWRlLCB5ID0gcHJvcG9ydGlvbikpICsKICAgIGdlb21fbGluZSgpICsKICAgIGdlb21fcG9pbnQoKSArCiAgICBzY2FsZV95X2NvbnRpbnVvdXMobGFiZWxzID0gc2NhbGVzOjpwZXJjZW50LCBsaW1pdHMgPSAwOjEsIGV4cGFuZCA9IGMoMCwgMCkpCmBgYAoKNS4gV2hhdCBpcyB0aGUgZ2VuZGVyIG9mIGEgdHlwaWNhbCBOb2JlbCBQcml6ZSB3aW5uZXI/ClNvIHRoZSBVU0EgYmVjYW1lIHRoZSBkb21pbmF0aW5nIHdpbm5lciBvZiB0aGUgTm9iZWwgUHJpemUgZmlyc3QgaW4gdGhlIDE5MzBzIGFuZCBoYWQga2VwdCB0aGUgbGVhZGluZyBwb3NpdGlvbiBldmVyIHNpbmNlLiBCdXQgb25lIGdyb3VwIHRoYXQgd2FzIGluIHRoZSBsZWFkIGZyb20gdGhlIHN0YXJ0LCBhbmQgbmV2ZXIgc2VlbXMgdG8gbGV0IGdvLCBhcmUgbWVuLiBNYXliZSBpdCBzaG91bGRuJ3QgY29tZSBhcyBhIHNob2NrIHRoYXQgdGhlcmUgaXMgc29tZSBpbWJhbGFuY2UgYmV0d2VlbiBob3cgbWFueSBtYWxlIGFuZCBmZW1hbGUgcHJpemUgd2lubmVycyB0aGVyZSBhcmUsIGJ1dCBob3cgc2lnbmlmaWNhbnQgaXMgdGhpcyBpbWJhbGFuY2U/IEFuZCBpcyBpdCBiZXR0ZXIgb3Igd29yc2Ugd2l0aGluIHNwZWNpZmljIHByaXplIGNhdGVnb3JpZXMgbGlrZSBwaHlzaWNzLCBtZWRpY2luZSwgbGl0ZXJhdHVyZSwgZXRjLj8KCmBgYHtyfQojIENhbGN1bGF0aW5nIHRoZSBwcm9wb3J0aW9uIG9mIGZlbWFsZSBsYXVyZWF0ZXMgcGVyIGRlY2FkZQpwcm9wX2ZlbWFsZV93aW5uZXJzIDwtIG5vYmVsICU+JQogICAgbXV0YXRlKAogICAgICAgIGZlbWFsZV93aW5uZXIgPSBzZXggPT0gIkZlbWFsZSIsCiAgICAgICAgZGVjYWRlID0gZmxvb3IoeWVhciAvIDEwKSAqIDEwCiAgICApICU+JQogICAgZ3JvdXBfYnkoZGVjYWRlLCBjYXRlZ29yeSkgJT4lCiAgICBzdW1tYXJpemUocHJvcG9ydGlvbiA9IG1lYW4oZmVtYWxlX3dpbm5lciwgbmEucm0gPSBUUlVFKSkKCiMgUGxvdHRpbmcgdGhlIHByb3BvcnRpb24gb2YgZmVtYWxlIGxhdXJlYXRlcyBwZXIgZGVjYWRlCmdncGxvdChwcm9wX2ZlbWFsZV93aW5uZXJzLCBhZXMoeCA9IGRlY2FkZSwgeSA9IHByb3BvcnRpb24sIGNvbG9yID0gY2F0ZWdvcnkpKSArCiAgICBnZW9tX2xpbmUoKSArCiAgICBnZW9tX3BvaW50KCkgKwogICAgc2NhbGVfeV9jb250aW51b3VzKGxhYmVscyA9IHNjYWxlczo6cGVyY2VudCwgbGltaXRzID0gMDoxLCBleHBhbmQgPSBjKDAsIDApKQpgYGAKCjYuIFRoZSBmaXJzdCB3b21hbiB0byB3aW4gdGhlIE5vYmVsIFByaXplClRoZSBwbG90IGFib3ZlIGlzIGEgYml0IG1lc3N5IGFzIHRoZSBsaW5lcyBhcmUgb3ZlcnBsb3R0aW5nLiBCdXQgaXQgZG9lcyBzaG93IHNvbWUgaW50ZXJlc3RpbmcgdHJlbmRzIGFuZCBwYXR0ZXJucy4gT3ZlcmFsbCB0aGUgaW1iYWxhbmNlIGlzIHByZXR0eSBsYXJnZSB3aXRoIHBoeXNpY3MsIGVjb25vbWljcywgYW5kIGNoZW1pc3RyeSBoYXZpbmcgdGhlIGxhcmdlc3QgaW1iYWxhbmNlLiBNZWRpY2luZSBoYXMgYSBzb21ld2hhdCBwb3NpdGl2ZSB0cmVuZCwgYW5kIHNpbmNlIHRoZSAxOTkwcyB0aGUgbGl0ZXJhdHVyZSBwcml6ZSBpcyBhbHNvIG5vdyBtb3JlIGJhbGFuY2VkLiBUaGUgYmlnIG91dGxpZXIgaXMgdGhlIHBlYWNlIHByaXplIGR1cmluZyB0aGUgMjAxMHMsIGJ1dCBrZWVwIGluIG1pbmQgdGhhdCB0aGlzIGp1c3QgY292ZXJzIHRoZSB5ZWFycyAyMDEwIHRvIDIwMTYuCgpHaXZlbiB0aGlzIGltYmFsYW5jZSwgd2hvIHdhcyB0aGUgZmlyc3Qgd29tYW4gdG8gcmVjZWl2ZSBhIE5vYmVsIFByaXplPyBBbmQgaW4gd2hhdCBjYXRlZ29yeT8KCmBgYHtyfQojIFBpY2tpbmcgb3V0IHRoZSBmaXJzdCB3b21hbiB0byB3aW4gYSBOb2JlbCBQcml6ZQpub2JlbCAlPiUKICAgIGZpbHRlcihzZXggPT0gIkZlbWFsZSIpICU+JQogICAgdG9wX24oMSwgZGVzYyh5ZWFyKSkKYGBgCgo3LiBSZXBlYXQgbGF1cmVhdGVzCkZvciBtb3N0IHNjaWVudGlzdHMvd3JpdGVycy9hY3RpdmlzdHMgYSBOb2JlbCBQcml6ZSB3b3VsZCBiZSB0aGUgY3Jvd25pbmcgYWNoaWV2ZW1lbnQgb2YgYSBsb25nIGNhcmVlci4gQnV0IGZvciBzb21lIHBlb3BsZSwgb25lIGlzIGp1c3Qgbm90IGVub3VnaCwgYW5kIGZldyBoYXZlIGdvdHRlbiBpdCBtb3JlIHRoYW4gb25jZS4gV2hvIGFyZSB0aGVzZSBsdWNreSBmZXc/IChIYXZpbmcgd29uIG5vIE5vYmVsIFByaXplIG15c2VsZiwgSSdsbCBhc3N1bWUgaXQncyBqdXN0IGFib3V0IGx1Y2suKQoKYGBge3J9CiMgU2VsZWN0aW5nIHRoZSBsYXVyZWF0ZXMgdGhhdCBoYXZlIHJlY2VpdmVkIDIgb3IgbW9yZSBwcml6ZXMuCm5vYmVsICU+JQogICAgY291bnQoZnVsbF9uYW1lKSAlPiUKICAgIGZpbHRlcihuID4gMSkKYGBgCgo4LiBIb3cgb2xkIGFyZSB5b3Ugd2hlbiB5b3UgZ2V0IHRoZSBwcml6ZT8KVGhlIGxpc3Qgb2YgcmVwZWF0IHdpbm5lcnMgY29udGFpbnMgc29tZSBpbGx1c3RyaW91cyBuYW1lcyEgV2UgYWdhaW4gbWVldCBNYXJpZSBDdXJpZSwgd2hvIGdvdCB0aGUgcHJpemUgaW4gcGh5c2ljcyBmb3IgZGlzY292ZXJpbmcgcmFkaWF0aW9uIGFuZCBpbiBjaGVtaXN0cnkgZm9yIGlzb2xhdGluZyByYWRpdW0gYW5kIHBvbG9uaXVtLiBKb2huIEJhcmRlZW4gZ290IGl0IHR3aWNlIGluIHBoeXNpY3MgZm9yIHRyYW5zaXN0b3JzIGFuZCBzdXBlcmNvbmR1Y3Rpdml0eSwgRnJlZGVyaWNrIFNhbmdlciBnb3QgaXQgdHdpY2UgaW4gY2hlbWlzdHJ5LCBhbmQgTGludXMgQ2FybCBQYXVsaW5nIGdvdCBpdCBmaXJzdCBpbiBjaGVtaXN0cnkgYW5kIGxhdGVyIGluIHBlYWNlIGZvciBoaXMgd29yayBpbiBwcm9tb3RpbmcgbnVjbGVhciBkaXNhcm1hbWVudC4gV2UgYWxzbyBsZWFybiB0aGF0IG9yZ2FuaXphdGlvbnMgYWxzbyBnZXQgdGhlIHByaXplIGFzIGJvdGggdGhlIFJlZCBDcm9zcyBhbmQgdGhlIFVOSENSIGhhdmUgZ290dGVuIGl0IHR3aWNlLgoKQnV0IGhvdyBvbGQgYXJlIHlvdSBnZW5lcmFsbHkgd2hlbiB5b3UgZ2V0IHRoZSBwcml6ZT8KCmBgYHtyfQojIExvYWRpbmcgdGhlIGx1YnJpZGF0ZSBwYWNrYWdlCmxpYnJhcnkobHVicmlkYXRlKQoKIyBDYWxjdWxhdGluZyB0aGUgYWdlIG9mIE5vYmVsIFByaXplIHdpbm5lcnMKbm9iZWxfYWdlIDwtIG5vYmVsICU+JQogICAgbXV0YXRlKGFnZSA9IHllYXIgLSB5ZWFyKGJpcnRoX2RhdGUpKQoKIyBQbG90dGluZyB0aGUgYWdlIG9mIE5vYmVsIFByaXplIHdpbm5lcnMKZ2dwbG90KG5vYmVsX2FnZSwgYWVzKHggPSBhZ2UsIHkgPSB5ZWFyKSkgKwogICAgZ2VvbV9wb2ludCgpICsKICAgIGdlb21fc21vb3RoKCkKYGBgCgo5LiBBZ2UgZGlmZmVyZW5jZXMgYmV0d2VlbiBwcml6ZSBjYXRlZ29yaWVzClRoZSBwbG90IGFib3ZlIHNob3dzIHVzIGEgbG90ISBXZSBzZWUgdGhhdCBwZW9wbGUgdXNlIHRvIGJlIGFyb3VuZCA1NSB3aGVuIHRoZXkgcmVjZWl2ZWQgdGhlIHByaWNlLCBidXQgbm93YWRheXMgdGhlIGF2ZXJhZ2UgaXMgY2xvc2VyIHRvIDY1LiBCdXQgdGhlcmUgaXMgYSBsYXJnZSBzcHJlYWQgaW4gdGhlIGxhdXJlYXRlcycgYWdlcywgYW5kIHdoaWxlIG1vc3QgYXJlIDUwKywgc29tZSBhcmUgdmVyeSB5b3VuZy4KCldlIGFsc28gc2VlIHRoYXQgdGhlIGRlbnNpdHkgb2YgcG9pbnRzIGlzIG11Y2ggaGlnaCBub3dhZGF5cyB0aGFuIGluIHRoZSBlYXJseSAxOTAwcyAtLSBub3dhZGF5cyBtYW55IG1vcmUgb2YgdGhlIHByaXplcyBhcmUgc2hhcmVkLCBhbmQgc28gdGhlcmUgYXJlIG1hbnkgbW9yZSB3aW5uZXJzLiBXZSBhbHNvIHNlZSB0aGF0IHRoZXJlIHdhcyBhIGRpc3J1cHRpb24gaW4gYXdhcmRlZCBwcml6ZXMgYXJvdW5kIHRoZSBTZWNvbmQgV29ybGQgV2FyICgxOTM5IC0gMTk0NSkuCgpMZXQncyBsb29rIGF0IGFnZSB0cmVuZHMgd2l0aGluIGRpZmZlcmVudCBwcml6ZSBjYXRlZ29yaWVzLgoKYGBge3J9CiMgU2FtZSBwbG90IGFzIGFib3ZlLCBidXQgZmFjZXRlZCBieSB0aGUgY2F0ZWdvcnkgb2YgdGhlIE5vYmVsIFByaXplCmdncGxvdChub2JlbF9hZ2UsIGFlcyh4ID0gYWdlLCB5ID0geWVhcikpICsKICAgIGdlb21fcG9pbnQoKSArCiAgICBnZW9tX3Ntb290aChzZSA9IEZBTFNFKSArCiAgICBmYWNldF93cmFwKH4gY2F0ZWdvcnkpCmBgYAoKMTAuIE9sZGVzdCBhbmQgeW91bmdlc3Qgd2lubmVycwpNb3JlIHBsb3RzIHdpdGggbG90cyBvZiBleGNpdGluZyBzdHVmZiBnb2luZyBvbiEgV2Ugc2VlIHRoYXQgYm90aCB3aW5uZXJzIG9mIHRoZSBjaGVtaXN0cnksIG1lZGljaW5lLCBhbmQgcGh5c2ljcyBwcml6ZSBoYXZlIGdvdHRlbiBvbGRlciBvdmVyIHRpbWUuIFRoZSB0cmVuZCBpcyBzdHJvbmdlc3QgZm9yIHBoeXNpY3M6IHRoZSBhdmVyYWdlIGFnZSB1c2VkIHRvIGJlIGJlbG93IDUwLCBhbmQgbm93IGl0J3MgYWxtb3N0IDcwLiBMaXRlcmF0dXJlIGFuZCBlY29ub21pY3MgYXJlIG1vcmUgc3RhYmxlLiBXZSBhbHNvIHNlZSB0aGF0IGVjb25vbWljcyBpcyBhIG5ld2VyIGNhdGVnb3J5LiBCdXQgcGVhY2Ugc2hvd3MgYW4gb3Bwb3NpdGUgdHJlbmQgd2hlcmUgd2lubmVycyBhcmUgZ2V0dGluZyB5b3VuZ2VyIQoKSW4gdGhlIHBlYWNlIGNhdGVnb3J5IHdlIGFsc28gYSB3aW5uZXIgYXJvdW5kIDIwMTAgdGhhdCBzZWVtcyBleGNlcHRpb25hbGx5IHlvdW5nLiBUaGlzIGJlZ3MgdGhlIHF1ZXN0aW9ucywgd2hvIGFyZSB0aGUgb2xkZXN0IGFuZCB5b3VuZ2VzdCBwZW9wbGUgZXZlciB0byBoYXZlIHdvbiBhIE5vYmVsIFByaXplPwoKYGBge3J9CiMgVGhlIG9sZGVzdCB3aW5uZXIgb2YgYSBOb2JlbCBQcml6ZSBhcyBvZiAyMDE2Cm5vYmVsX2FnZSAlPiUgdG9wX24oMSwgYWdlKQoKIyBUaGUgeW91bmdlc3Qgd2lubmVyIG9mIGEgTm9iZWwgUHJpemUgYXMgb2YgMjAxNgpub2JlbF9hZ2UgJT4lIHRvcF9uKDEsIGRlc2MoYWdlKSkKYGBgCgoxMS4gWW91IGdldCBhIHByaXplIQoKCkhleSEgWW91IGdldCBhIHByaXplIGZvciBtYWtpbmcgaXQgdG8gdGhlIHZlcnkgZW5kIG9mIHRoaXMgbm90ZWJvb2shIEl0IG1pZ2h0IG5vdCBiZSBhIE5vYmVsIFByaXplLCBidXQgSSBtYWRlIGl0IG15c2VsZiBpbiBwYWludCBzbyBpdCBzaG91bGQgY291bnQgZm9yIHNvbWV0aGluZy4gQnV0IGRvbid0IGRlc3BhaXIsIExlb25pZCBIdXJ3aWN6IHdhcyA5MCB5ZWFycyBvbGQgd2hlbiBoZSBnb3QgaGlzIHByaXplLCBzbyBpdCBtaWdodCBub3QgYmUgdG9vIGxhdGUgZm9yIHlvdS4gV2hvIGtub3dzLgoKQmVmb3JlIHlvdSBsZWF2ZSwgd2hhdCB3YXMgYWdhaW4gdGhlIG5hbWUgb2YgdGhlIHlvdW5nZXN0IHdpbm5lciBldmVyIHdobyBpbiAyMDE0IGdvdCB0aGUgcHJpemUgZm9yICJbaGVyXSBzdHJ1Z2dsZSBhZ2FpbnN0IHRoZSBzdXBwcmVzc2lvbiBvZiBjaGlsZHJlbiBhbmQgeW91bmcgcGVvcGxlIGFuZCBmb3IgdGhlIHJpZ2h0IG9mIGFsbCBjaGlsZHJlbiB0byBlZHVjYXRpb24iPwoKYGBge3J9CiMgVGhlIG5hbWUgb2YgdGhlIHlvdW5nZXN0IHdpbm5lciBvZiB0aGUgTm9iZWwgUHJpemUgYXMgb2YgMjAxNgp5b3VuZ2VzdF93aW5uZXIgPSAnTWFsYWxhIFlvdXNhZnphaScKYGBgCgoK</div>
 
 
 
